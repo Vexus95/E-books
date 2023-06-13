@@ -12,7 +12,7 @@ h1{
 
 form{
     width:500px;
-    height:500px;
+    height:470px;
     margin: auto;
     color:black;
     font-family: 'Jacques Francois';
@@ -56,10 +56,11 @@ button:hover {
 
 .headingsContainer p{
     color: black;
-    font-size: 35;
+    font-size: 35px;
 }
 .mainContainer{
     padding: 16px;
+    
 }
 
 
