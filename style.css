@@ -11,12 +11,16 @@ h1{
 
 
 form{
-    width:35rem;
+    width:500px;
+    height:500px;
     margin: auto;
-    color:whitesmoke;
+    color:black;
+    font-family: 'Jacques Francois';
+    font-style: italic;
+    font-size: 22px;
     backdrop-filter: blur(16px) saturate(180%);
     -webkit-backdrop-filter: blur(16px) saturate(180%);
-    background-color: rgba(11, 15, 13, 0.582);
+    background-color: rgba(53, 62, 152, 0.29);
     border-radius: 12px;
     border: 1px solid rgba(255, 255, 255, 0.125);
     padding: 20px 25px;
@@ -47,10 +51,12 @@ button:hover {
 
 .headingsContainer{
     text-align: center;
+    color : black
 }
 
 .headingsContainer p{
-    color: gray;
+    color: black;
+    font-size: 35;
 }
 .mainContainer{
     padding: 16px;
