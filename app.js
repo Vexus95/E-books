@@ -1,34 +1,30 @@
-import express from 'express'
+const express = require("express");
+const mysql = require("mysql2");
+const dotenv = require('dotenv');
+const path = require('path');
 
-import { getAuthor, getAuthors, createAuthor } from './database.js';
+dotenv.config( { path : './.env'});
 
 const app = express();
-const port = process.env.PORT || 5000
 
-app.use(express.json())
+const pool = mysql.createPool({
+    host : process.env.DATABASE_HOST,
+    user: process.env.DATABASE_USER,
+    password: process.env.DATABASE_PASSWORD,
+    database: process.env.DATABASE
+});
 
-app.get("/authors", async (req, res) =>{
-    const authors = await getAuthors()
-    res.send(authors)
-})
+const publicDirectory = path.join(__dirname, './public');
+app.use(express.static(publicDirectory));
 
-app.get("/authors/:id", async (req, res) =>{
-    const id = req.params.id
-    const author = await getAuthor(id)
-    res.send(author)
-})
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
 
-app.post("/authors", async (req, res) => {
-    const { Author_Name, Author_Surname} = req.body
-    const author = await createAuthor(Author_Name, Author_Surname)
-    req.status(201).send(author)
-})
+app.set('view engine', 'hbs');
 
-app.use((err, req, res, next) =>{
-    console.error(err.stack)
-    res.status(500).send("Erreur !")
-})
+app.use('/', require('./routes/pages'));
+app.use('/auth', require('./routes/auth'))
 
-app.listen(port, () => {
-    console.log("Serveur en ligne !")
-})
+app.listen(5001, () =>{
+    console.log("Le Serveur est lancé sur le port 5001")
+});

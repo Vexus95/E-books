@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/style.css">
+    <title>Login page in HTML</title>
+    <link href='https://fonts.googleapis.com/css?family=Jacques Francois' rel='stylesheet'>
+
+</head>
+<body>
+    <h1><img src="./images/Logo_Solution_Factory_1.png"></h1>
+    <form action="/auth/register" method="POST" >
+        <!-- Headings for the form -->
+        <div class="headingsContainer">
+            <p>Bienvenue</p>
+        </div>
+
+        <!-- Main container for all inputs -->
+        <div class="mainContainer">
+            <!-- Username -->
+            <label for="Lname">Nom :</label>
+            <input type="text" placeholder="Entrez Nom" id="Lname" name="Lname" required>
+            <br><br>
+
+            <!-- Password -->
+            <label for="Fname">Prénom :</label>
+            <input type="text" placeholder="Entrez Prénom" id="Fname" name="Fname" required>
+            <br><br>
+
+            <!-- Password -->   
+            <label for="Email">E-mail :</label>
+            <input type="text" placeholder="Entrez Email" id="Email" name="Email" required>
+            <br><br>
+
+            <!-- Password -->
+            <label for="Pnumber">Téléphone :</label>
+            <input type="text" placeholder="Entrez mot de passe" id="Pnumber" name="Pnumber" required>
+            <br><br>
+
+            <!-- Password -->
+            <label for="Pswrd">Mot de passe :</label>
+            <input type="password" placeholder="Entrez mot de passe" id="Pswrd" name="Pswrd" required>
+            <br><br>
+
+            <!-- Password -->
+            <label for="Cpswrd">Confirmer mot de passe :</label>
+            <input type="password" placeholder="Entrez mot de passe" id="Cpswrd" name="Cpswrd" required>
+
+            <!-- Submit button -->
+            <button type="submit" id="btn">Créer </button>
+
+            <p class="">Vous avez deja un compte ?  <a href="login">Se connecter</a></p>
+        </div>
+    </form>
+</body>
+</html>
