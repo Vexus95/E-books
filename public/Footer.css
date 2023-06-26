@@ -22,7 +22,41 @@ body {
   nav .logo {
     cursor: pointer;
   }
-  
+
+  .profile-menu {
+    position: relative;
+    display: inline-block;
+  }
+
+  .menu {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    right: 0;
+    top: 20px;
+  }
+
+  .menu a {
+    color:  rgba(39, 45, 111, 0.65);;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+  }
+
+  .profile-menu:hover .menu {
+    display: block;
+  }
+
+  nav .profile-icon{
+    width: 20px;
+    height: 20px;
+    float: left;
+    margin-left: 30px;
+  }
+
   nav .search-bar {
     position: relative; /* Ajout de la position relative pour contenir l'icône */
     display: flex;
