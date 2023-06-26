@@ -76,18 +76,6 @@ exports.login = (req, res) => {
     });
 };
 
-exports.subscribe = (req,res) =>{
-    const{idSubs} = req.body;
-    let idd = token.id;
-    console.log(idd)
-    pool.query('UPDATE user SET Id_Subscription = ? WHERE id = ?')
-    ///UPDATE client
-    ///SET rue = '49 Rue Ameline',
-    ///ville = 'Saint-Eustache-la-Forêt',
-    ///code_postal = '76210'
-    ///WHERE id = 2
-}
-
 exports.verifyAuth = (req, res, next) => {
     // Récupérer le token du cookie
     const token = req.cookies.jwt;
@@ -116,6 +104,36 @@ exports.logout = (req, res) => {
     res.cookie('jwt', '', { expires: new Date(Date.now() - 10 * 1000) });
     res.redirect('/');
 };
+
+exports.subscribe = (req, res) => {
+    const userId = req.user.id; // l'ID de l'utilisateur est généralement stocké dans req.user.id après authentification
+    const subscriptionId = req.body.subscriptionId; // l'ID de l'abonnement est envoyé dans le corps de la requête
+
+    // Vérifiez d'abord si l'abonnement existe
+    pool.query('SELECT * FROM subscriptions WHERE Id_Subscription = ?', [subscriptionId], (error, results) => {
+        if (error) {
+            console.log(error);
+            return res.status(500).send('Erreur lors de la vérification de l\'existence de l\'abonnement.');
+        }
+
+        if (results.length === 0) {
+            return res.status(400).send('L\'abonnement n\'existe pas.');
+        }
+
+        // Mettez à jour l'abonnement de l'utilisateur
+        pool.query('UPDATE Users SET subscription_id = ? WHERE id = ?', [subscriptionId, userId], (error, results) => {
+            if (error) {
+                console.log(error);
+                return res.status(500).send('Erreur lors de la mise à jour de l\'abonnement.');
+            }
+
+            res.status(200).send('Abonnement mis à jour avec succès.');
+        });
+    });
+};
+ 
+
+
 
 exports.reserveBook = (req, res) => {
     const userId = req.user.id; // l'ID de l'utilisateur est généralement stocké dans req.user.id après authentification
@@ -155,3 +173,4 @@ exports.reserveBook = (req, res) => {
         });
     });
 }
+
