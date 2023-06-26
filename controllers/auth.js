@@ -43,36 +43,40 @@ exports.register = (req, res) => {
 
 exports.login = (req, res) => {
     const { Email, Pswrd } = req.body;
-  
+
     pool.query('SELECT * FROM users WHERE Users_Mail = ?', [Email], async (error, results) => {
-      if (error) {
-        console.log(error);
-      }
-  
-      if (results.length === 0) {
-        return res.render('login', {
-          message: 'L\'utilisateur n\'existe pas'
-        });
-      }
-  
-      const user = results[0];
-      const isPasswordMatch = await bcrypt.compare(Pswrd, user.Users_Password);
-  
-      if (!isPasswordMatch) {
-        return res.render('login', {
-          message: 'Le mot de passe est incorrect'
-        });
-      }
-  
-      const token = jwt.sign({ userId: user.Users_id }, 'your-jwt-secret');
-  
-      // Stockez le JWT dans un cookie ou renvoyez-le dans la réponse
-      res.cookie('token', token);
-      // OU
-      // res.json({ token: token });
-  
-      return res.render('/', {
-        message: 'Connecté avec succès'
-      });
+        if (error) {
+            console.log(error);
+        }
+
+        if (results.length > 0) {
+            const isPasswordValid = await bcrypt.compare(Pswrd, results[0].Users_Password);
+            
+            if (!isPasswordValid) {
+                return res.render('login', {
+                    message: 'Le mot de passe est incorrect'
+                });
+            } else {
+                const id = results[0].Users_id; // Ajustez en fonction de la structure de vos données
+                const token = jwt.sign({ id }, process.env.JWT_SECRET, {
+                    expiresIn: process.env.JWT_EXPIRES
+                });
+
+
+                const cookieOptions = {
+                    expires: new Date(
+                        Date.now() + process.env.COOKIE_EXPIRES * 24 * 60 * 60 * 1000
+                    ),
+                    httpOnly: true
+                }
+
+                res.cookie('jwt', token, cookieOptions);
+                res.status(200).redirect("/");
+            }
+        } else {
+            return res.render('login', {
+                message: 'Email non enregistré'
+            });
+        }
     });
-  };
+};
