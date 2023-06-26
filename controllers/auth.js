@@ -77,3 +77,14 @@ exports.login = (req, res) => {
     });
 };
 
+exports.subscribe = (req,res) =>{
+    const{idSubs} = req.body;
+    let idd = token.id;
+    console.log(idd)
+    pool.query('UPDATE user SET Id_Subscription = ? WHERE id = ?')
+    ///UPDATE client
+    ///SET rue = '49 Rue Ameline',
+    ///ville = 'Saint-Eustache-la-Forêt',
+    ///code_postal = '76210'
+    ///WHERE id = 2
+}
