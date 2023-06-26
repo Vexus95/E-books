@@ -16,6 +16,9 @@ h2 {
   
   /* GLOBAL STYLES */
   
+.titre{
+    color:  rgba(39, 45, 111, 0.65);
+}
 .card__title{
     opacity: 0;
     font-size: 1.50rem;
@@ -107,7 +110,7 @@ p {
 .card__button {
     padding: 0.75em 1.6em;
     width: fit-content;
-    width: -moz-fit-content; /* Prefijo necesario para Firefox  */
+    width: -moz-fit-content; 
     font-variant: small-caps;
     font-weight: bold;
     border-radius: 0.45em;

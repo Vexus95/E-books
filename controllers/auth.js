@@ -19,11 +19,11 @@ exports.register = (req, res) => {
 
         if( result.length > 0 ) {
             return res.render('register', {
-                message: 'This email is already in use'
+                message: 'Cet email est deja utilisé'
             })
         } else if(Pswrd !== Cpswrd) {
             return res.render('register', {
-                message: 'Passwords do not match!'
+                message: 'Les mots de passe ne correspondent pas'
             })
         }
         
@@ -34,7 +34,7 @@ exports.register = (req, res) => {
                 console.log(error);
             } else {
                 return res.render('index', {
-                    message: 'User registered!'
+                    message: 'Compte crée'
                 })
             }
         })
@@ -42,5 +42,37 @@ exports.register = (req, res) => {
 };
 
 exports.login = (req, res) => {
-    
-}
+    const { Email, Pswrd } = req.body;
+  
+    pool.query('SELECT * FROM users WHERE Users_Mail = ?', [Email], async (error, results) => {
+      if (error) {
+        console.log(error);
+      }
+  
+      if (results.length === 0) {
+        return res.render('login', {
+          message: 'L\'utilisateur n\'existe pas'
+        });
+      }
+  
+      const user = results[0];
+      const isPasswordMatch = await bcrypt.compare(Pswrd, user.Users_Password);
+  
+      if (!isPasswordMatch) {
+        return res.render('login', {
+          message: 'Le mot de passe est incorrect'
+        });
+      }
+  
+      const token = jwt.sign({ userId: user.Users_id }, 'your-jwt-secret');
+  
+      // Stockez le JWT dans un cookie ou renvoyez-le dans la réponse
+      res.cookie('token', token);
+      // OU
+      // res.json({ token: token });
+  
+      return res.render('/', {
+        message: 'Connecté avec succès'
+      });
+    });
+  };
