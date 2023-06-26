@@ -10,7 +10,7 @@
 
 </head>
 <body>
-    <h1><img src="./images/Logo_Solution_Factory_1.png"></h1>
+    <a href="/"><h1><img src="Logo_Solution_Factory_2.png" alt="Logo La l'e-brairie"></h1></a>
     <form action="/auth/register" method="POST" >
         <!-- Headings for the form -->
         <div class="headingsContainer">
@@ -52,7 +52,11 @@
             <button type="submit" id="btn">Créer </button>
 
             <p class="">Vous avez deja un compte ?  <a href="login">Se connecter</a></p>
+            <a href="/"><p class="">Retour à l'accueil  </p></a>
         </div>
     </form>
+    {{#if message }}
+    <h4 class="">{{message}}</h4>
+    {{/if}}
 </body>
 </html>

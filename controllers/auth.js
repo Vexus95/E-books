@@ -17,11 +17,14 @@ exports.register = (req, res) => {
             console.log(error);
         }
 
-        if (result[0]){
-            return res.json({status : "error", error : "L'email existe deja"})
-        }
-        if( Pswrd !== Cpswrd ) {
-            return res.json({status : "error", error : "Veuillez rentrer le meme mot de passe"})
+        if( result.length > 0 ) {
+            return res.render('register', {
+                message: 'This email is already in use'
+            })
+        } else if(Pswrd !== Cpswrd) {
+            return res.render('register', {
+                message: 'Passwords do not match!'
+            })
         }
         
         let hashedPassword = await bcrypt.hash(Pswrd, 8);
@@ -30,7 +33,9 @@ exports.register = (req, res) => {
             if(error){
                 console.log(error);
             } else {
-                console.log("Compte crée")
+                return res.render('index', {
+                    message: 'User registered!'
+                })
             }
         })
     });

@@ -22,6 +22,8 @@ app.use(express.json());
 
 app.set('view engine', 'hbs');
 
+app.use(express.static('views/images')); 
+
 app.use('/', require('./routes/pages'));
 app.use('/auth', require('./routes/auth'))
 
