@@ -237,6 +237,11 @@ index .p {
 
 .card__description{
   color:white;
+  text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 200px; 
 }
 
 .card__button:focus {

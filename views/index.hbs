@@ -39,9 +39,8 @@
         <div class="container">
     <div class="row">
         <div class="chevron-container">
-            <button class="pre-btn"><img src="right-chevron--2.png"></button>
+            <button id="prevButton" class="pre-btn"><img src="right-chevron--2.png"></button>
         </div>
-
         {{#each books}}
         <article class="card">
             <img class="card__background" src="{{this.Book_ImagePath}}" alt="{{this.Book_Title}}" width="280"/>
@@ -56,9 +55,8 @@
             </div>
         </article>
         {{/each}}
-
         <div class="chevron-container">
-            <button class="nxt-btn"><img src="right-chevron--2.png"></button>
+            <button id="nextButton" class="nxt-btn"><img src="right-chevron--2.png"></button>
         </div>
     </div>
 </div>
