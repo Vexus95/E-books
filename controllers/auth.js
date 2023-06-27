@@ -132,17 +132,37 @@ exports.subscribe = (req, res) => {
     });
 };
 
-exports.getBooks = (req, res) => {
-    pool.query('SELECT * FROM book LIMIT 4', (error, results) => {
+exports.getBooks = (req, res, next) => {
+    pool.query('SELECT * FROM book LIMIT 3', (error, results) => {
         if (error) {
             console.log(error);
             return res.status(500).send('Erreur lors de la récupération des livres.');
         }
 
-        // Envoyer les résultats (les livres) à la vue
-        res.status(200).render('index', { books: results });
+        // Ajouter les résultats (les livres) à res.locals
+        res.locals.books = results;
+
+        // Passer au prochain middleware
+        next();
     });
 };
+
+exports.getTopSellingBooks = (req, res, next) => {
+    // Modifier la requête pour trier les livres par ventes en ordre décroissant et limiter à 3
+    pool.query('SELECT * FROM book ORDER BY Book_Reservation DESC LIMIT 3', (error, results) => {
+        if (error) {
+            console.log(error);
+            return res.status(500).send('Erreur lors de la récupération des livres.');
+        }
+
+        // Ajouter les résultats (les livres) à res.locals
+        res.locals.bestbooks = results;
+
+        // Passer au prochain middleware
+        next();
+    });
+};
+
  
 exports.reserveBook = (req, res) => {
     const userId = req.user.id; // l'ID de l'utilisateur est généralement stocké dans req.user.id après authentification
