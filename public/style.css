@@ -235,6 +235,10 @@ index .p {
     color: var(--black);
 }
 
+.card__description{
+  color:white;
+}
+
 .card__button:focus {
 outline: 2px solid black;
 outline-offset: -5px;

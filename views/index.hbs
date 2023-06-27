@@ -44,12 +44,12 @@
 
         {{#each books}}
         <article class="card">
-            <img class="card__background" src="demonSlayer.jpg" alt="{{this.Book_Title}}" width="280"/>
+            <img class="card__background" src="{{this.Book_ImagePath}}" alt="{{this.Book_Title}}" width="280"/>
             <div class="card__content | flow">
                 <div class="card__content--container | flow">
                     <h2 class="card__title">{{this.Book_Title}}</h2>
                     <p class="card__description">
-                        
+                        {{this.Book_Description}}
                     </p>
                 </div>
                 <button class="card__button">Read more</button>
