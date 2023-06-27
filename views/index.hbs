@@ -6,7 +6,6 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> <!-- Librairie Icon-->
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="/style.css">
-        <link rel="stylesheet" href="/css/swiper-bundle.min.css" />
         <title>La L'e-brairie</title>
     </head>
     <body>
@@ -18,7 +17,7 @@
             <div class="search-bar">
                 <input type="search" placeholder="Rechercher...">
                 <span class = "search-icon">
-                <img src="search-icon.png" alt="search"  width="20" height="20";>
+                  <img src="search-icon.png" alt="search"  width="20" height="20";>
                 </span>
             </div>
 
@@ -42,27 +41,27 @@
             <div class="chevron-container">
                 <button class="pre-btn" id="prevButton"><img src="right-chevron--2.png"></button>
             </div>
-        {{#each books}}
-        <article class="card">
-            <img class="card__background" src="{{this.Book_ImagePath}}" alt="{{this.Book_Title}}" width="280"/>
-            <div class="card__content | flow">
-                <div class="card__content--container | flow">
-                    <h2 class="card__title">{{this.Book_Title}}</h2>
-                    <p class="card__description">
-                        {{this.Book_Description}}
-                    </p>
+            {{#each books}}
+            <article class="card">
+                <img class="card__background" src="{{this.Book_ImagePath}}" alt="{{this.Book_Title}}" width="280"/>
+                <div class="card__content | flow">
+                    <div class="card__content--container | flow">
+                        <h2 class="card__title">{{this.Book_Title}}</h2>
+                        <p class="card__description">
+                            {{this.Book_Description}}
+                        </p>
+                    </div>
+                    <button class="card__button">Read more</button>
                 </div>
-                <button class="card__button">Read more</button>
+            </article>
+            {{/each}}
+            <div class="chevron-container">
+                <button  class="nxt-btn" id="nextButton"><img src="right-chevron--2.png"></button>
             </div>
-        </article>
-        {{/each}}
-        <div class="chevron-container">
-            <button  class="nxt-btn" id="nextButton"><img src="right-chevron--2.png"></button>
-        </div>
-    </div>
-</div>
+          </div>
+      </div>
 
-    <!-- *********************SECTION DEUUUUUUUUX************************ -->
+    <!-- *********************SECTION DEUX************************ -->
 
     <h2 class="titre">Meilleures ventes</h2> 
     <div class="outline best-sellers">

@@ -15,8 +15,8 @@ router.get('/login', (req, res) =>{
     res.render('login');
 });
 
-router.get('/protected-page', authController.verifyAuth, (req, res) => {
-    res.render('index-connected');
+router.get('/protected-page', authController.verifyAuth, authController.getBooks, authController.getTopSellingBooks, (req, res) => {
+    res.render('index-connected',  { books: res.locals.books, bestbooks: res.locals.bestbooks });
 });
 
 router.get('/logout', authController.logout);

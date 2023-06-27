@@ -133,7 +133,7 @@ exports.subscribe = (req, res) => {
 };
 
 exports.getBooks = (req, res, next) => {
-    pool.query('SELECT * FROM book LIMIT 3', (error, results) => {
+    pool.query('SELECT * FROM book ', (error, results) => {
         if (error) {
             console.log(error);
             return res.status(500).send('Erreur lors de la récupération des livres.');
@@ -163,6 +163,20 @@ exports.getTopSellingBooks = (req, res, next) => {
     });
 };
 
+exports.getBooksByGenre = (req, res) => {
+    const genre = req.params.genre; // Récupérer le genre à partir du paramètre de route
+
+    pool.query('SELECT b.* FROM book AS b INNER JOIN belong_to AS bt ON b.Id_Book = bt.Id_Book INNER JOIN genre AS g ON g.Id_Genre = bt.Id_Genre WHERE g.Genre_Name = ?;',[genre],(error, results) => {
+            if (error) {
+                console.log(error);
+                return res.status(500).send('Erreur lors de la récupération des livres.');
+            }
+
+            // Envoyer les résultats (les livres) à la vue
+            res.status(200).render('index', { booksByGenre: results });
+        }
+    );
+}; 
  
 exports.reserveBook = (req, res) => {
     const userId = req.user.id; // l'ID de l'utilisateur est généralement stocké dans req.user.id après authentification
