@@ -166,7 +166,7 @@ exports.getTopSellingBooks = (req, res, next) => {
 exports.getBooksByGenre = (req, res) => {
     const genre = req.params.genre; // Récupérer le genre à partir du paramètre de route
 
-    pool.query('SELECT b.* FROM book AS b INNER JOIN belong_to AS bt ON b.Id_Book = bt.Id_Book INNER JOIN genre AS g ON g.Id_Genre = bt.Id_Genre WHERE g.Genre_Name = ?;',[genre],(error, results) => {
+    pool.query('SELECT b.* FROM book AS b INNER JOIN belong_to AS bt ON b.Id_Book = bt.Id_Book INNER JOIN genre AS g ON g.Id_Genre = bt.Id_Genre WHERE g.Genre_Name = ?',[genre],(error, results) => {
             if (error) {
                 console.log(error);
                 return res.status(500).send('Erreur lors de la récupération des livres.');
@@ -177,10 +177,25 @@ exports.getBooksByGenre = (req, res) => {
         }
     );
 }; 
+
+exports.getReservedBooks = (req, res) => {
+    const userId = req.user.id;
+  
+    pool.query('SELECT b.* FROM book AS b INNER JOIN borrow AS bw ON b.Id_Book = bw.Id_Book INNER JOIN users AS u ON u.Users_id = bw.Users_id WHERE u.Users_id = ?', [userId], (error, results) => {
+      if (error) {
+        console.log(error);
+        return res.status(500).send('Erreur lors de la récupération des livres.');
+      }
+  
+      // Envoyer les résultats (les livres) à la vue
+      res.status(200).render('index', { reservedbook: results });
+    });
+};
+  
  
 exports.reserveBook = (req, res) => {
     const userId = req.user.id; // l'ID de l'utilisateur est généralement stocké dans req.user.id après authentification
-    const bookId = req.body.bookId; // l'ID du livre est envoyé dans le corps de la requête
+    const bookId = req.body.bookId; // l'ID du livre est envoyé dans le corps de la requête     
 
     // Obtenir les informations sur l'abonnement de l'utilisateur
     pool.query('SELECT Subscription_Max_Book FROM subscription JOIN Users ON Users.Id_Subscription = subscription.Id_Subscription WHERE Users_id = ?', [userId], async (error, results) => {
