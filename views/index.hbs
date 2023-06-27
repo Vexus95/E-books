@@ -37,73 +37,31 @@
         <h2 class="titre">Nouveautés</h2>  
         
         <div class="container">
-            <div class="row">
-                <div class="chevron-container">
-                    <button class="pre-btn"><img src="right-chevron--2.png"></button>
-                  </div>
+    <div class="row">
+        <div class="chevron-container">
+            <button class="pre-btn"><img src="right-chevron--2.png"></button>
+        </div>
 
-              <article class="card">
-                <img class="card__background" src="demonSlayer.jpg" alt="Demon Slayer" width="280"/>
-                <div class="card__content | flow">
-                  <div class="card__content--container | flow">
-                    <h2 class="card__title">Demon Slayer</h2>
+        {{#each books}}
+        <article class="card">
+            <img class="card__background" src="demonSlayer.jpg" alt="{{this.Book_Title}}" width="280"/>
+            <div class="card__content | flow">
+                <div class="card__content--container | flow">
+                    <h2 class="card__title">{{this.Book_Title}}</h2>
                     <p class="card__description">
-                      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rerum in
-                      labore laudantium deserunt fugiat numquam.
+                        
                     </p>
-                  </div>
-                  <button class="card__button">Read more</button>
                 </div>
-              </article>
-              
-              <article class="card">
-                <img class="card__background" src="Naruto-72.jpg" alt="Naruto" width="255"/>
-                <div class="card__content | flow">
-                  <div class="card__content--container | flow">
-                    <h2 class="card__title">Naruto</h2>
-                    <p class="card__description">
-                      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rerum in
-                      labore laudantium deserunt fugiat numquam.
-                    </p>
-                  </div>
-                  <button class="card__button">Read more</button>
-                </div>
-              </article>
-              
-              <article class="card">
-                <img class="card__background" src="onePiece-102.jpeg" alt="One piece" width="255"/>
-                <div class="card__content | flow">
-                  <div class="card__content--container | flow">
-                    <h2 class="card__title">One Piece</h2>
-                    <p class="card__description">
-                      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rerum in
-                      labore laudantium deserunt fugiat numquam.
-                    </p>
-                  </div>
-                  <button class="card__button">Read more</button>
-                </div>
-              </article>
-              
-              <article class="card">
-                <img class="card__background" src="nana.jpg" alt="Nana" width="255"
-                />
-                <div class="card__content | flow">
-                  <div class="card__content--container | flow">
-                    <h2 class="card__title">Nana</h2>
-                    <p class="card__description">
-                      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rerum in
-                      labore laudantium deserunt fugiat numquam.
-                    </p>
-                  </div>
-                  <button class="card__button">Read more</button>
-                </div>
-              </article>
-
-              <div class="chevron-container">
-                <button class="nxt-btn"><img src="right-chevron--2.png"></button>
-              </div>
+                <button class="card__button">Read more</button>
             </div>
-           </div>
+        </article>
+        {{/each}}
+
+        <div class="chevron-container">
+            <button class="nxt-btn"><img src="right-chevron--2.png"></button>
+        </div>
+    </div>
+</div>
 
     <!-- *********************SECTION DEUUUUUUUUX************************ -->
 

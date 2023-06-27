@@ -131,10 +131,19 @@ exports.subscribe = (req, res) => {
         });
     });
 };
+
+exports.getBooks = (req, res) => {
+    pool.query('SELECT * FROM book LIMIT 4', (error, results) => {
+        if (error) {
+            console.log(error);
+            return res.status(500).send('Erreur lors de la récupération des livres.');
+        }
+
+        // Envoyer les résultats (les livres) à la vue
+        res.status(200).render('index', { books: results });
+    });
+};
  
-
-
-
 exports.reserveBook = (req, res) => {
     const userId = req.user.id; // l'ID de l'utilisateur est généralement stocké dans req.user.id après authentification
     const bookId = req.body.bookId; // l'ID du livre est envoyé dans le corps de la requête
@@ -173,4 +182,47 @@ exports.reserveBook = (req, res) => {
         });
     });
 }
+
+exports.addBook = (req, res) => {
+    const { title, author, link } = req.body; // Ces champs dépendent des données requises pour créer un livre dans votre base de données
+
+    pool.query('INSERT INTO book (Book_Title, Book_Author,Book_Link) VALUES (?, ?, ?)', [title, author, link], (error, results) => {
+        if (error) {
+            console.log(error);
+            return res.status(500).send('Erreur lors de l\'ajout du livre.');
+        }
+
+        res.status(200).send('Le livre a été ajouté avec succès.');
+    });
+};
+
+exports.updateBook = (req, res) => {
+    const { bookId, title, author, isbn, publishedDate } = req.body; // Ces champs dépendent des informations nécessaires pour modifier un livre dans votre base de données
+
+    pool.query('UPDATE Book SET Book_Title = ?, Book_Author = ?, Book_Link = ?, WHERE id = ?', [title, author, link, bookId], (error, results) => {
+        if (error) {
+            console.log(error);
+            return res.status(500).send('Erreur lors de la mise à jour du livre.');
+        }
+
+        res.status(200).send('Le livre a été mis à jour avec succès.');
+    });
+};
+
+exports.deleteBook = (req, res) => {
+    const bookId = req.params.bookId; // l'ID du livre est généralement envoyé dans l'URL, par exemple /books/123 où 123 est l'ID du livre
+
+    pool.query('DELETE FROM books WHERE Id_Book = ?', [bookId], (error, results) => {
+        if (error) {
+            console.log(error);
+            return res.status(500).send('Erreur lors de la suppression du livre.');
+        }
+
+        if (results.affectedRows === 0) {
+            return res.status(404).send('Aucun livre trouvé avec cet ID.');
+        }
+
+        res.status(200).send('Le livre a été supprimé avec succès.');
+    });
+};
 

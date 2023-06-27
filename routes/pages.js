@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const authController = require('../controllers/auth');
 
-router.get('/', (req, res) =>{
+router.get('/', authController.getBooks, (req, res) =>{
     res.render('index');
 });
 
