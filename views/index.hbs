@@ -11,13 +11,15 @@
     <body>
           <nav>
             <div class="logo">
-                <img src="Logo_Solution_Factory_2.png" alt="Logo La l'e-brairie"  width="100" height="100";>
+                <a href="/" ><img src="/images/Logo_Solution_Factory_2.png" alt="Logo La l'e-brairie"  width="100" height="100"></a>
             </div>
 
             <div class="search-bar">
                 <form action="/searchBook" method="GET">
-                  <input type="text" id="bookTitle" name="bookTitle" placeholder="Titre du livre">
-                  <input type="submit" value="Rechercher">
+                    <input type="text" id="bookTitle" name="bookTitle" placeholder="Titre du livre">
+                    <button type="submit" class="search-icon">
+                        <img src="/images/search-icon.png" alt="search" width="20" height="20">
+                    </button>
                 </form>
             </div>
 
@@ -25,7 +27,7 @@
                 <li><a class="titre" href="#">E-book</a></li>
                 <li><a class="titre" href="#">Ouvrage papier</a></li>
                 <div class="profile-menu">
-                  <li><img src="user.png" class="profile-icon" alt="Image profil"></a></li>
+                  <li><img src="/images/user.png" class="profile-icon" alt="Image profil"></a></li>
                   <div class="menu">
                         <a href="register" >Se créer un compte</a>
                         <a href="login">Se connecter</a>
@@ -39,7 +41,7 @@
         <div class="container">
           <div class="row">
             <div class="chevron-container">
-                <button class="pre-btn" id="prevButton"><img src="right-chevron--2.png"></button>
+                <button class="pre-btn" id="prevButton"><img src="/images/right-chevron--2.png"></button>
             </div>
             {{#each books}}
             <article class="card">
@@ -51,12 +53,12 @@
                             {{this.Book_Description}}
                         </p>
                     </div>
-                    <button class="card__button">Read more</button>
+                    <a href="/book/{{this.Id_Book}}"><button class="card__button">Read more</button></a>
                 </div>
             </article>
             {{/each}}
             <div class="chevron-container">
-                <button  class="nxt-btn" id="nextButton"><img src="right-chevron--2.png"></button>
+                <button  class="nxt-btn" id="nextButton"><img src="/images/right-chevron--2.png"></button>
             </div>
           </div>
       </div>
@@ -93,7 +95,7 @@
         <div class="content">
           <div class="top">
             <div class="logo-details">
-                <img src="Logo_Solution_Factory_2.png" alt="La l'e-brairie"  width="100" height="100">
+                <img src="/images/Logo_Solution_Factory_2.png" alt="La l'e-brairie"  width="100" height="100">
                 <div class="logo_name">La L'e-brairie</div>
             </div>
 

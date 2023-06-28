@@ -21,6 +21,14 @@ router.get('/protected-page', authController.verifyAuth, authController.getBooks
 
 router.get('/searchBook', authController.searchBook);
 
+router.get('/profil', (req, res) =>{
+    res.render('profil');
+});
+
+router.get('/book/:id', authController.getBookById, (req, res) => {
+    res.render('book', { book: res.locals.book });
+});
+
 router.get('/logout', authController.logout);
 
 module.exports = router;

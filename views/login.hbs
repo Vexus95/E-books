@@ -10,30 +10,32 @@
 </head>
 <body>
     <a href="/"><h1><img src="Logo_Solution_Factory_2.png" alt="Logo La l'e-brairie"></h1></a>
-    <form action="/auth/login"  method="POST">
-        <!-- Headings for the form -->
-        <div class="headingsContainer">
-            <p>Bienvenue</p>
-        </div>
+    <div class="formlogin">
+        <form action="/auth/login"  method="POST">
+            <!-- Headings for the form -->
+            <div class="headingsContainer">
+                <p>Bienvenue</p>
+            </div>
 
-        <!-- Main container for all inputs -->
-        <div class="mainContainer">
-            <!-- Username -->
-            <label for="Email">E-mail :</label>
-            <input type="text" placeholder="Entrez Email" id="Email" name="Email" required>
-            <br><br>
+            <!-- Main container for all inputs -->
+            <div class="mainContainer">
+                <!-- Username -->
+                <label for="Email">E-mail :</label>
+                <input type="text" placeholder="Entrez Email" id="Email" name="Email" required>
+                <br><br>
 
-            <!-- Password -->
-            <label for="Pswrd">Mot de passe :</label>
-            <input type="password" placeholder="Entrez mot de passe" id="Pswrd" name="Pswrd" required>
+                <!-- Password -->
+                <label for="Pswrd">Mot de passe :</label>
+                <input type="password" placeholder="Entrez mot de passe" id="Pswrd" name="Pswrd" required>
 
-            <!-- Submit button -->
-            <button type="submit">Se connecter</button>
-            <!-- Sign up link -->
-            <p class="">Pas de compte?  <a href="register">Se créer un compte!</a></p>
-            <a href="/"><p class="">Retour à l'accueil  </p></a>
-        </div>
-    </form>
+                <!-- Submit button -->
+                <button type="submit">Se connecter</button>
+                <!-- Sign up link -->
+                <p class="">Pas de compte?  <a href="register">Se créer un compte!</a></p>
+                <a href="/"><p class="">Retour à l'accueil  </p></a>
+            </div>
+        </form>
+    </div>
     {{#if message }}
     <h4 class="message-alert">{{message}}</h4>
     {{/if}}

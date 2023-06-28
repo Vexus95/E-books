@@ -1,0 +1,120 @@
+.container {
+    display: flex;
+    justify-content: center;
+    margin-left: 2%;
+    margin-right: 2%;
+    overflow: hidden;
+}
+  
+.container .Book img {
+    height: 50vh;
+    box-shadow: 30px -15px rgba(117, 206, 153, 1);
+    margin: auto;
+}
+.container .Book{
+    background-color: rgba(53, 62, 152, 0.11);
+    width: 25vw;
+    height: 60vh;
+    border-radius: 15px;
+    align-items: center;
+    display: flex;
+}
+
+.container .Name {
+    background-color: rgba(53, 62, 152, 0.11);
+    width:59vw;
+    height: 13vh;
+    margin-left: 3%;
+    border-radius: 15px;
+    padding: 1%;
+}
+
+.emprunter {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-top: -7%;
+    margin-right: 10%;
+  }
+
+button{
+    background-color: rgba(53, 62, 152, 0.29);
+    border-radius: 15px;
+    height: 5vh;
+    width: 30%;
+}
+.title {
+    padding-left: 1%;
+    padding-top: 1%;
+    font-size: 32px;
+    display: flex;
+    margin-right: 1%;
+}
+
+.title-and-author{
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    max-width: 100%;
+    max-height: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.note{
+    padding-top: 1%;
+    display: flex;
+    padding-left: 10px;
+}
+
+.rating {
+    display: inline-block;
+}
+  
+  .rating input {
+    display: none;
+  }
+  
+  .rating label {
+    float: right;
+    cursor: pointer;
+    color: grey;
+  }
+  
+  .rating label:before {
+    content: '\2605';
+    font-size: 24px;
+  }
+  
+  .rating input:checked ~ label {
+    color: yellow;
+  }
+  
+  .rating label:hover {
+    color: yellow;
+  }
+  
+  
+.container .resume {
+    background-color: rgba(53, 62, 152, 0.11);
+    width: 59vw;
+    height: 45vh;
+    margin-left: 3%;
+    margin-top: 2vh;
+    border-radius: 15px;
+    padding-left: 10px; 
+}
+
+.livres {
+    display: flex;
+    justify-content: center;
+    margin-top: 1%;
+    margin-left: 8%;
+    margin-right: 5%;
+    margin-bottom: 1%;
+    background-color: rgba(53, 62, 152, 0.11);
+    width: 85vw;
+    height: 30vh;
+    border-radius: 15px;
+}

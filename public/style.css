@@ -18,7 +18,7 @@ p {
 }
 
 
-form{
+.formlogin{
     width:500px;
     margin: auto;
     color:black;
@@ -451,17 +451,6 @@ nav .profile-icon{
   margin-left: 30px;
 }
 
-nav .search-bar {
-  position: relative; /* Ajout de la position relative pour contenir l'icône */
-  display: flex;
-  align-items: center; /* Pour centrer l'icône verticalement */
-  background: rgba(53, 62, 152, 0.29);
-  border-radius: 15px;
-  width: 614px;
-  height: 41px;
-  margin-top: 30px;
-}
-
 nav .search-bar input {
   border: none;
   outline: none;
@@ -472,6 +461,7 @@ nav .search-bar input {
   font-size: 15px;
   text-indent: 25px; /* Déplacer le curseur d'écriture*/
   text-align: left;
+  border-radius: 15px;
 }
 
 nav .search-bar span {
@@ -486,6 +476,29 @@ nav .search-bar input::placeholder {
   padding-left: 5px; /* Décalage vers la droite */
 }
 
+.search-bar form {
+  position: relative; /* Ajout de la position relative pour contenir l'icône */
+  align-items: center; /* Pour centrer l'icône verticalement */
+  background: rgba(53, 62, 152, 0.29);
+  border-radius: 15px;
+  width: 614px;
+  height: 41px;
+  margin-top: 30px;
+  display: flex;
+  align-items: center; /* Aligns items vertically in the center */
+  gap: 10px; /* Adds a gap of 10 pixels between the input field and the button */
+}
+
+
+.search-icon {
+  background: none;
+  border: none;
+  width: 9%;
+}
+
+.search-icon:focus {
+  outline: none;
+}
 
 nav ol {
   display: flex;

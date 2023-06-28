@@ -6,67 +6,60 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> <!-- Librairie Icon-->
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="/Footer.css">
-        <link rel="stylesheet" href="/Book.css">
+        <link rel="stylesheet" href="/Profil.css">
         <title>La L'e-brairie</title>
     </head>
     <body>
         <nav>
             <div class="logo">
-                <a href="/" ><img src="/images/Logo_Solution_Factory_2.png" alt="Logo La l'e-brairie"  width="100" height="100"></a>
+                <img src="/Logo_Solution_Factory_2.png" alt="La l'e-brairie"  width="100" height="100";>
             </div>
 
             <div class="search-bar">
-                <form action="/searchBook" method="GET">
-                    <input type="text" id="bookTitle" name="bookTitle" placeholder="Titre du livre">
-                    <button type="submit" class="search-icon">
-                        <img src="/images/search-icon.png" alt="search" width="20" height="20">
-                    </button>
-                </form>
+                <input type="search" placeholder="Rechercher...">
+                <span class = "search-icon">
+                <img src="/search-icon.png" alt="search"  width="20" height="20";>
+                </span>
             </div>
 
             <ol>
-                <li><a class="titre" href="#">E-book</a></li>
-                <li><a class="titre" href="#">Ouvrage papier</a></li>
-                <div class="profile-menu">
-                  <li><img src="/images/user.png" class="profile-icon" alt="Image profil"></a></li>
-                  <div class="menu">
-                        <a href="register" >Se créer un compte</a>
-                        <a href="login">Se connecter</a>
-                  </div>
-                </div>
+                <li><a href="#">e-book</a></li>
+                <li><a href="#">ouvrage papier</a></li>
+                <li>
+                <img src="/user.png" alt="Image profil" width="20" height="20" style="float: left; margin-left:30px;">    
+                <a href="#">profil utilisateur</a></li>
             </ol>
-          </nav>
-
+        </nav>
         <div class="container">
-            <div class="Book">
-                <img src="{{book.Book_ImagePath}}" alt="{{book.Book_Title}}">
+            <div class="picture">
+                <p>Profil</p>
+                <img src="images/Purple Pink Gradient Man 3D Avatar 1.png" alt="Avatar">
+                <p>Nom : ELMESTARI KARIM</p>
             </div>
             <div>
-                <div class="Name">
-                    <div>
-                    <div class="title-and-author">
-                        <p class="title">{{book.Book_Title}}</p>
-                        <p class="author">{{book.Book_Author}}</p>
-                    </div>
-                    <div class="rating">
-                        <p class="note">Note : {{book.Book_Rating}}/10</p>
-                    </div>
-                    </div>
-                    <div class="emprunter">
-                        <button type="button">Emprunter</button>
-                    </div>
+                <div class="Connexion">
+                    <p class="title">Connexion & Sécurité</p>
+                    <p>Email : test</p>
+                    <p>Mot de passe : ****</p>
                 </div>
-                <div class="resume">
-                    <p>{{book.Book_Description}}</p>
+                <div class="abonnement">
+                    <p class="title"> Abonnement</p>
+                    <ul>Avantages
+                      <li>Avantage 1</li>
+                      <li>Avantage 2</li>
+                      <li>Avantage 3</li>
+                    </ul>
                 </div>
+                
             </div>
         </div>
+        <h2>Livres en cours</h2>
         <div class="livres">Test</div>
         <footer>
             <div class="content">
               <div class="top">
                 <div class="logo-details">
-                    <img src="/images/Logo_Solution_Factory_2.png" alt="La l'e-brairie"  width="100" height="100">
+                    <img src="images/Logo_Solution_Factory_2.png" alt="La l'e-brairie"  width="100" height="100">
                     <div class="logo_name">La L'e-brairie</div>
                 </div>
     
@@ -118,5 +111,7 @@
               </div>
             </div>
           </footer>
+    
+        <script src="JS/script.js"></script>
     </body>
 </html>

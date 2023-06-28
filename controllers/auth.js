@@ -167,6 +167,23 @@ exports.getBooks = (req, res, next) => {
     });
 };
 
+exports.getBookById = (req, res, next) => {
+    const id = req.params.id;
+
+    pool.query('SELECT * FROM book WHERE Id_Book = ?', [id], (error, results) => {
+        if (error) {
+            console.log(error);
+            return res.status(500).send({ message: 'Une erreur est survenue lors de l\'interrogation de la base de données.' });
+        }
+        if (results.length > 0) {
+            res.locals.book = results[0];
+            next();
+        } else {
+          return res.status(404).send({ message: 'Aucun livre trouvé avec cet ID.' });
+        }
+    });
+};
+
 exports.getTopSellingBooks = (req, res, next) => {
     // Modifier la requête pour trier les livres par ventes en ordre décroissant et limiter à 3
     pool.query('SELECT * FROM book ORDER BY Book_Reservation DESC LIMIT 3', (error, results) => {

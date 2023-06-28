@@ -1,0 +1,68 @@
+.container {
+    display: flex;
+    justify-content: center;
+    margin-left: 2%;
+    margin-right: 2%;
+  }
+  
+.title {
+    padding-left: 1%;
+    padding-top: 1%;
+    font-size: 32px;
+}
+
+.container .picture p{
+    justify-content: center;
+    text-align: center;
+    font-size: 32px;
+    margin: auto;
+}
+
+.container .picture img {
+    display: flex;
+    margin: auto;
+    margin-top: 5%;
+}
+.container .picture {
+    background-color: rgba(53, 62, 152, 0.11);
+    width: 30vw;
+    height: 41vh;
+    border-radius: 15px;
+}
+  
+.container .Connexion {
+    background-color: rgba(53, 62, 152, 0.11);
+    width:60vw;
+    height: 20vh;
+    margin-left: 1%;
+    border-radius: 15px;
+}
+  
+.container .abonnement {
+    background-color: rgba(53, 62, 152, 0.11);
+    width:60vw;
+    height: 20vh;
+    margin-left: 1%;
+    margin-top: 1vh;
+    border-radius: 15px;
+}
+
+.container .abonnement ul{
+
+}
+
+.livres {
+    display: flex;
+    justify-content: center;
+    margin-left: 5%;
+    margin-right: 2%;
+    margin-bottom: 1%;
+    background-color: rgba(53, 62, 152, 0.11);
+    width: 90vw;
+    height: 30vh;
+    border-radius: 15px;
+}
+
+h2{
+    margin-left: 5%; 
+}
