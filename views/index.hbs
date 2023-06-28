@@ -15,10 +15,10 @@
             </div>
 
             <div class="search-bar">
-                <input type="search" placeholder="Rechercher...">
-                <span class = "search-icon">
-                  <img src="search-icon.png" alt="search"  width="20" height="20";>
-                </span>
+                <form action="/searchBook" method="GET">
+                  <input type="text" id="bookTitle" name="bookTitle" placeholder="Titre du livre">
+                  <input type="submit" value="Rechercher">
+                </form>
             </div>
 
             <ol>

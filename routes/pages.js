@@ -19,6 +19,8 @@ router.get('/protected-page', authController.verifyAuth, authController.getBooks
     res.render('index-connected', { books: res.locals.books, bestbooks: res.locals.bestbooks });
 });
 
+router.get('/searchBook', authController.searchBook);
+
 router.get('/logout', authController.logout);
 
 module.exports = router;

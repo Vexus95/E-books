@@ -132,8 +132,28 @@ exports.subscribe = (req, res) => {
     });
 };
 
+exports.searchBook = (req, res) => {
+    const { bookTitle } = req.query;
+
+    pool.query('SELECT * FROM book WHERE Book_title LIKE ?', ['%' + bookTitle + '%'], (error, results) => {
+        if (error) {
+            console.log(error);
+            return res.status(500).send({ message: 'Une erreur est survenue lors de l\'interrogation de la base de données.' });
+        }
+
+        if (results.length > 0) {
+            // Stocke les livres dans res.locals.books et rend la page du livre
+            res.locals.books = results;
+            return res.render('book', { books: res.locals.books });
+        } else {
+          return res.status(404).send({ message: 'Aucun livre trouvé avec ce titre.' });
+        }
+    });
+};
+
+
 exports.getBooks = (req, res, next) => {
-    pool.query('SELECT * FROM book ', (error, results) => {
+    pool.query('SELECT * FROM book LIMIT 3', (error, results) => {
         if (error) {
             console.log(error);
             return res.status(500).send('Erreur lors de la récupération des livres.');
