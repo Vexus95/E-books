@@ -31,9 +31,7 @@ exports.register = (req, res) => {
                 console.log(error);
                 return res.status(500).send({ message: 'Une erreur est survenue lors de l\'insertion des données.' });
             } else {
-                return res.status(200).render('index', {
-                    message: 'Compte crée'
-                })
+                return res.status(200).render('login', {message: 'Compte crée'})
             }
         })
     });
@@ -67,7 +65,7 @@ exports.login = (req, res) => {
                 }
 
                 res.cookie('jwt', token, cookieOptions);
-                res.status(200).redirect('/protected-page');
+                res.status(200).redirect('/index-connected');
         
             }
         } else {
@@ -88,7 +86,6 @@ exports.verifyAuth = (req, res, next) => {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     req.user = { id: decoded.id }; // stocker l'ID de l'utilisateur dans req.user
     // Vérifier la validité du token
-
     jwt.verify(token, process.env.JWT_SECRET, (error, decodedToken) => {
         if (error) {
             console.log(error);
@@ -99,6 +96,25 @@ exports.verifyAuth = (req, res, next) => {
         next();
     });
 }
+
+exports.getUserById = (req, res, next) => {
+    const userId = req.params.id;
+
+    pool.query('SELECT users.*, subscription.Subscription_Name FROM users INNER JOIN subscription ON users.Id_Subscription = subscription.Id_Subscription WHERE users.Users_id = ?', [userId], (error, results) => {
+        if (error) {
+            console.log(error);
+            return res.status(500).send({ message: 'Une erreur est survenue lors de l\'interrogation de la base de données.' });
+        }
+        if (results.length > 0) {
+            res.locals.user = results[0]; // Stocker les données de l'utilisateur et les détails de son abonnement dans res.locals.user
+            next(); // Passer au prochain middleware
+        } else {
+            return res.status(404).send({ message: 'Aucun utilisateur trouvé avec cet ID.' });
+        }
+    });
+};
+
+
 
 exports.logout = (req, res) => {
     res.cookie('jwt', '', { expires: new Date(Date.now() - 10 * 1000) });
@@ -132,7 +148,7 @@ exports.subscribe = (req, res) => {
     });
 };
 
-exports.searchBook = (req, res) => {
+exports.searchBook = (req, res, next) => {
     const { bookTitle } = req.query;
 
     pool.query('SELECT * FROM book WHERE Book_title LIKE ?', ['%' + bookTitle + '%'], (error, results) => {
@@ -140,11 +156,11 @@ exports.searchBook = (req, res) => {
             console.log(error);
             return res.status(500).send({ message: 'Une erreur est survenue lors de l\'interrogation de la base de données.' });
         }
-
+        
         if (results.length > 0) {
             // Stocke les livres dans res.locals.books et rend la page du livre
-            res.locals.books = results;
-            return res.render('book', { books: res.locals.books });
+            res.locals.book = results[0];
+            next();
         } else {
           return res.status(404).send({ message: 'Aucun livre trouvé avec ce titre.' });
         }
@@ -215,35 +231,53 @@ exports.getBooksByGenre = (req, res) => {
     );
 }; 
 
-exports.getReservedBooks = (req, res) => {
+exports.getReservedBooks = (req, res, next) => {
     const userId = req.user.id;
-  
-    pool.query('SELECT b.* FROM book AS b INNER JOIN borrow AS bw ON b.Id_Book = bw.Id_Book INNER JOIN users AS u ON u.Users_id = bw.Users_id WHERE u.Users_id = ?', [userId], (error, results) => {
-      if (error) {
-        console.log(error);
-        return res.status(500).send('Erreur lors de la récupération des livres.');
-      }
-  
-      // Envoyer les résultats (les livres) à la vue
-      res.status(200).render('index', { reservedbook: results });
-    });
-};
-  
- 
-exports.reserveBook = (req, res) => {
-    const userId = req.user.id; // l'ID de l'utilisateur est généralement stocké dans req.user.id après authentification
-    const bookId = req.body.bookId; // l'ID du livre est envoyé dans le corps de la requête     
 
-    // Obtenir les informations sur l'abonnement de l'utilisateur
-    pool.query('SELECT Subscription_Max_Book FROM subscription JOIN Users ON Users.Id_Subscription = subscription.Id_Subscription WHERE Users_id = ?', [userId], async (error, results) => {
+    pool.query('SELECT b.* FROM book AS b INNER JOIN borrow AS bw ON b.Id_Book = bw.Id_Book INNER JOIN users AS u ON u.Users_id = bw.Users_id WHERE u.Users_id = ?', [userId], (error, results) => {
         if (error) {
             console.log(error);
-            return res.status(500).send('Erreur lors de la récupération des informations sur l\'abonnement.');
+            return res.status(500).send('Erreur lors de la récupération des livres.');
+        }
+        // Stocker les résultats (les livres) dans res.locals
+        res.locals.reservedBooks = results;
+        
+        // Passer au prochain middleware
+        next();
+    });
+};
+ 
+exports.reserveBook = (req, res) => {
+    const userId = req.user.id;
+    const bookId = req.params.bookId;
+    
+    // Récupérer l'abonnement de l'utilisateur
+    pool.query('SELECT Id_Subscription FROM users WHERE Users_id = ?', [userId], async (error, results) => {
+        if (error) {
+            console.log(error);
+            return res.status(500).send('Erreur lors de la récupération de l\'abonnement.');
         }
 
-        const maxBooks = results[0].max_books;
+        const subscriptionId = results[0].Id_Subscription;
+        let maxBooks;
+        switch (subscriptionId) {
+            case 1:
+                maxBooks = 0; // Pas de réservation pour l'abonnement 1
+                break;
+            case 2:
+                maxBooks = 1; // 1 réservation pour l'abonnement 2
+                break;
+            case 3:
+                maxBooks = 3; // 3 réservations pour l'abonnement 3
+                break;
+            case 4:
+                maxBooks = 5; // 5 réservations pour l'abonnement 4
+                break;
+            default:
+                return res.status(400).send('Type d\'abonnement inconnu.');
+        }
 
-        // Vérifier combien de livres l'utilisateur a déjà réservé
+        // Vérifier combien de livres l'utilisateur a déjà réservés
         pool.query('SELECT COUNT(*) AS reservedBooks FROM borrow WHERE Users_id = ?', [userId], (error, results) => {
             if (error) {
                 console.log(error);
@@ -253,7 +287,7 @@ exports.reserveBook = (req, res) => {
             const reservedBooks = results[0].reservedBooks;
 
             if (reservedBooks >= maxBooks) {
-                return res.status(400).send('Vous avez atteint la limite de livres que vous pouvez réserver.');
+                return res.status(404).send({ message: 'Vous avez atteint la limite de livres que vous pouvez réserver.' });
             }
 
             // Réserver le livre pour l'utilisateur
@@ -263,11 +297,12 @@ exports.reserveBook = (req, res) => {
                     return res.status(500).send('Erreur lors de la réservation du livre.');
                 }
 
-                res.status(200).send('Le livre a été réservé avec succès.');
+                res.status(200).send({message:'Le livre a été réservé avec succès.'});
             });
         });
     });
-}
+};
+
 
 exports.addBook = (req, res) => {
     const { title, author, link } = req.body; // Ces champs dépendent des données requises pour créer un livre dans votre base de données

@@ -11,55 +11,78 @@
     </head>
     <body>
         <nav>
-            <div class="logo">
-                <img src="/Logo_Solution_Factory_2.png" alt="La l'e-brairie"  width="100" height="100";>
-            </div>
+              <div class="logo">
+                  <a href="/index-connected" ><img src="/images/Logo_Solution_Factory_2.png" alt="Logo La l'e-brairie"  width="100" height="100"></a>
+              </div>
 
-            <div class="search-bar">
-                <input type="search" placeholder="Rechercher...">
-                <span class = "search-icon">
-                <img src="/search-icon.png" alt="search"  width="20" height="20";>
-                </span>
-            </div>
+              <div class="search-bar">
+                <form action="/searchBook-connected" method="GET">
+                    <input type="text" id="bookTitle" name="bookTitle" placeholder="Titre du livre">
+                    <button type="submit" class="search-icon">
+                        <img src="/images/search-icon.png" alt="search" width="20" height="20">
+                    </button>
+                </form>
+              </div>
 
-            <ol>
-                <li><a href="#">e-book</a></li>
-                <li><a href="#">ouvrage papier</a></li>
-                <li>
-                <img src="/user.png" alt="Image profil" width="20" height="20" style="float: left; margin-left:30px;">    
-                <a href="#">profil utilisateur</a></li>
-            </ol>
-        </nav>
-        <div class="container">
+              <ol>
+                <li><a class="titre" href="#">E-book</a></li>
+                <li><a class="titre" href="#">Ouvrage papier</a></li>
+                <div class="profile-menu">
+                  <li><img src="/images/user.png" class="profile-icon" alt="Image profil"></a></li>
+                  <div class="menu">
+                        <a href="profil" >Mon Profil</a>
+                        <a href="/logout">Se Déconnecter</a>      
+                  </div>
+                </div>
+              </ol>
+          </nav>
+        <div class="profilcontainer">
             <div class="picture">
                 <p>Profil</p>
-                <img src="images/Purple Pink Gradient Man 3D Avatar 1.png" alt="Avatar">
-                <p>Nom : ELMESTARI KARIM</p>
+                <img src="/images/Purple Pink Gradient Man 3D Avatar 1.png" alt="Avatar">
+                <p>Nom : {{user.Users_Lastname}} {{user.Users_Firstname}}</p> <!-- Ici le nom de l'utilisateur -->
             </div>
             <div>
                 <div class="Connexion">
                     <p class="title">Connexion & Sécurité</p>
-                    <p>Email : test</p>
-                    <p>Mot de passe : ****</p>
+                    <p>Email : {{user.Users_Mail}}</p> <!-- Ici l'email de l'utilisateur -->
+                    <p>Mot de passe : ****</p> <!-- Pour des raisons de sécurité, on ne devrait pas afficher le mot de passe -->
                 </div>
                 <div class="abonnement">
                     <p class="title"> Abonnement</p>
+                    <p>Type : {{user.Subscription_Name}}</p> <!-- Ici le type d'abonnement de l'utilisateur -->
                     <ul>Avantages
-                      <li>Avantage 1</li>
+                      <li>Avantage 1</li> <!-- Ces avantages devraient aussi provenir de la base de données -->
                       <li>Avantage 2</li>
                       <li>Avantage 3</li>
                     </ul>
                 </div>
-                
             </div>
         </div>
         <h2>Livres en cours</h2>
-        <div class="livres">Test</div>
+        <div class="container">
+              <div class="row">
+                  {{#each books}}
+                      <article class="card">
+                          <img class="card__background" src="{{this.Book_ImagePath}}" alt="{{this.Book_Title}}" width="280"/>
+                          <div class="card__content | flow">
+                              <div class="card__content--container | flow">
+                                  <h2 class="card__title">{{this.Book_Title}}</h2>
+                                  <p class="card__description">
+                                      {{this.Book_Description}}
+                                  </p>
+                              </div>
+                                  <a href="/book-connected/{{this.Id_Book}}"><button class="card__button">Read more</button></a>
+                          </div>
+                      </article>
+                  {{/each}}
+              </div>
+            </div>
         <footer>
             <div class="content">
               <div class="top">
                 <div class="logo-details">
-                    <img src="images/Logo_Solution_Factory_2.png" alt="La l'e-brairie"  width="100" height="100">
+                    <img src="/images/Logo_Solution_Factory_2.png" alt="La l'e-brairie"  width="100" height="100">
                     <div class="logo_name">La L'e-brairie</div>
                 </div>
     

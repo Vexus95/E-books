@@ -2,15 +2,145 @@
 <html lang="fr">
     <head>
         <meta charset="UTF-8">
-        <link rel="icon" type="image/png" href="images/Logo_Solution_Factory_2.png"> <!-- Icon en haut de la page-->
+        <link rel="icon" type="image/png" href="Logo_Solution_Factory_2.png"> <!-- Icon en haut de la page-->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> <!-- Librairie Icon-->
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="/Footer.css">
         <link rel="stylesheet" href="/Book.css">
+        <script src="/script.js"></script>
         <title>La L'e-brairie</title>
     </head>
     <body>
+      {{#if id}}
         <nav>
+            <div class="logo">
+                <a href="/index-connected" ><img src="/images/Logo_Solution_Factory_2.png" alt="Logo La l'e-brairie"  width="100" height="100"></a>
+            </div>
+            <div class="search-bar">
+                <form action="/searchBook-connected" method="GET">
+                    <input type="text" id="bookTitle" name="bookTitle" placeholder="Titre du livre">
+                    <button type="submit" class="search-icon">
+                        <img src="/images/search-icon.png" alt="search" width="20" height="20">
+                    </button>
+                </form>
+            </div>
+            <ol>
+                <li><a class="titre" href="#">E-book</a></li>
+                <li><a class="titre" href="#">Ouvrage papier</a></li>
+                <div class="profile-menu">
+                  <li><img src="/images/user.png" class="profile-icon" alt="Image profil"></a></li>
+                  <div class="menu">
+                        <a href="profil" >Mon Profil</a>
+                        <a href="/logout">Se Déconnecter</a>
+                  </div>
+                </div>
+            </ol>
+          </nav>
+        <div class="container">
+            <div class="Book">
+                <img src="{{book.Book_ImagePath}}" alt="{{book.Book_Title}}">
+            </div>
+            <div>
+                <div class="Name">
+                    <div>
+                    <div class="title-and-author">
+                        <p class="title">{{book.Book_Title}}</p>
+                        <p class="author">{{book.Book_Author}}</p>
+                    </div>
+                    <div class="rating">
+                        <p class="note">Note : {{book.Book_Rating}}/10</p>
+                    </div>
+                    </div>
+                    <div class="emprunter">
+                        <button id="reserveButton" data-id="{{book.Id_Book}}" type="button">Emprunter</button>
+                    </div>
+                    {{#if message }}
+                      <h4 class="message-alert">{{message}}</h4>
+                    {{/if}}
+                </div>
+                <script>
+                    document.getElementById('reserveButton').addEventListener('click', function() {
+                        var bookId = this.dataset.id; // Récupère l'ID du livre à partir de l'attribut data-id
+                        fetch('/book-connected/' + bookId, { // Remplacer cette URL par l'URL correcte pour réserver un livre
+                            method: 'POST', // ou 'GET', selon la méthode que votre route utilise
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            credentials: 'include', // Important pour envoyer les cookies avec la requête
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            alert(data.message);
+                        })
+                        .catch((error) => {
+                            console.error('Error:', error);
+                        });
+                    });
+                </script>
+                <div class="resume">
+                    <p>{{book.Book_Description}}</p>
+                </div>
+            </div>
+        </div>
+        <div class="livres">Test</div>
+        <footer>
+            <div class="content">
+              <div class="top">
+                <div class="logo-details">
+                    <img src="/images/Logo_Solution_Factory_2.png" alt="La l'e-brairie"  width="100" height="100">
+                    <div class="logo_name">La L'e-brairie</div>
+                </div>
+    
+                <div class="media-icons">
+                  <a href="#"><i class="fa fa-facebook-f" ></i></a>
+                  <a href="#"><i class="fa fa-twitter"></i></a>
+                  <a href="#"><i class="fa fa-instagram"></i></a>
+                  <a href="#"><i class="fa fa-linkedin"></i></a>
+                  <a href="#"><i class="fa fa-youtube"></i></a>
+                </div>
+              </div>
+    
+              <div class="link-boxes">
+                <ul class="box">
+                  <li class="link_name">Company</li>
+                  <li><a href="/index-connected">Home</a></li>
+                  <li><a href="#">Contact us</a></li>
+                  <li><a href="#">About us</a></li>
+                  <li><a href="#">Get started</a></li>
+                </ul>
+                <ul class="box">
+                  <li class="link_name">Services</li>
+                  <li><a href="#">App design</a></li>
+                  <li><a href="#">Web design</a></li>
+                  <li><a href="#">Logo design</a></li>
+                  <li><a href="#">Banner design</a></li>
+                </ul>
+                <ul class="box">
+                  <li class="link_name">Account</li>
+                  <li><a href="profile">Profile</a></li>
+                  <li><a href="#">My account</a></li>
+                  <li><a href="#">Prefrences</a></li>
+                  <li><a href="#">Purchase</a></li>
+                </ul>
+                <ul class="box input-box">
+                  <li class="link_name">Subscribe</li>
+                  <li><input type="text" placeholder="Enter your email"></li>
+                  <li><input type="button" value="Subscribe"></li>
+                </ul>
+              </div>
+            </div>
+            <div class="bottom-details">
+              <div class="bottom_text">
+                <span class="copyright_text">Copyright © 2021 <a href="#">CodingLab.</a>All rights reserved</span>
+                <span class="policy_terms">
+                  <a href="#">Privacy policy</a>
+                  <a href="#">Terms & condition</a>
+                </span>
+              </div>
+            </div>
+          </footer>
+      {{else}}
+      <nav>
             <div class="logo">
                 <a href="/" ><img src="/images/Logo_Solution_Factory_2.png" alt="Logo La l'e-brairie"  width="100" height="100"></a>
             </div>
@@ -30,13 +160,12 @@
                 <div class="profile-menu">
                   <li><img src="/images/user.png" class="profile-icon" alt="Image profil"></a></li>
                   <div class="menu">
-                        <a href="register" >Se créer un compte</a>
+                        <a href="register" >Créer un compte</a>
                         <a href="login">Se connecter</a>
                   </div>
                 </div>
             </ol>
           </nav>
-
         <div class="container">
             <div class="Book">
                 <img src="{{book.Book_ImagePath}}" alt="{{book.Book_Title}}">
@@ -51,9 +180,6 @@
                     <div class="rating">
                         <p class="note">Note : {{book.Book_Rating}}/10</p>
                     </div>
-                    </div>
-                    <div class="emprunter">
-                        <button type="button">Emprunter</button>
                     </div>
                 </div>
                 <div class="resume">
@@ -82,7 +208,7 @@
               <div class="link-boxes">
                 <ul class="box">
                   <li class="link_name">Company</li>
-                  <li><a href="#">Home</a></li>
+                  <li><a href="/">Home</a></li>
                   <li><a href="#">Contact us</a></li>
                   <li><a href="#">About us</a></li>
                   <li><a href="#">Get started</a></li>
@@ -96,7 +222,7 @@
                 </ul>
                 <ul class="box">
                   <li class="link_name">Account</li>
-                  <li><a href="#">Profile</a></li>
+                  <li><a href="login">Profile</a></li>
                   <li><a href="#">My account</a></li>
                   <li><a href="#">Prefrences</a></li>
                   <li><a href="#">Purchase</a></li>
@@ -118,5 +244,6 @@
               </div>
             </div>
           </footer>
+      {{/if}}
     </body>
 </html>
