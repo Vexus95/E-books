@@ -1,0 +1,66 @@
+.container{
+    display: grid;
+    grid-template-columns: repeat(7, 0.5fr);
+    grid-gap: 10px;
+    grid-auto-rows: minmax(100px, auto);
+    margin-left: 2%;
+    margin-right: 2%;
+    margin-bottom: 2%;
+    overflow: hidden;
+}
+
+.filters {
+    grid-column: 1;
+    grid-row: span all;
+    padding-left: 20%;
+}
+
+.filters ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.filters ul:nth-child(2) {
+    margin-top: 10%;
+    margin-bottom: 10%;
+}
+
+.filters .list {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    color: black;
+    font-size: 15px;
+    text-decoration: none;
+    letter-spacing: 1px;
+}
+
+.eBooks {
+
+    grid-row: span all;
+    padding: 1%;
+    display: flex;
+    flex-flow: row wrap;
+    column-gap: 2%;
+    row-gap: 4%;
+}
+
+.eBooks .Book{
+    background-color: rgba(53, 62, 152, 0.11);
+    width: 20vh;
+    height: 25vh;
+    padding-top: 1.25%;
+    padding-bottom: 1%;
+    border-radius: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.eBooks .Book img {
+    height: 20vh;
+    box-shadow: 7px -7px rgba(117, 206, 153, 1);
+}
+
