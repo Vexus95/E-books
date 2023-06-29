@@ -122,8 +122,7 @@ exports.logout = (req, res) => {
 exports.subscribe = (req, res) => {
     const userId = req.user.id; // l'ID de l'utilisateur est généralement stocké dans req.user.id après authentification
     const subscriptionId = req.params.subscriptionId; // l'ID de l'abonnement est envoyé dans le corps de la requête
-
-    console.log(userId, subscriptionId)
+    
     // Vérifiez d'abord si l'abonnement existe
     pool.query('SELECT * FROM subscription WHERE Id_Subscription = ?', [subscriptionId], (error, results) => {
         if (error) {
@@ -142,7 +141,7 @@ exports.subscribe = (req, res) => {
                 return res.status(500).send('Erreur lors de la mise à jour de l\'abonnement.');
             }
 
-            res.status(200).send('Abonnement mis à jour avec succès.');
+            res.status(200).send({ message: 'Abonnement mis à jour avec succès.' });
         });
     });
 };

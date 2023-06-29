@@ -39,60 +39,60 @@
 
 <!-- ******************** PRINCING ************************-->
 
-<section class="pricing">
-    {{#each subscriptions}}
-    <div class="table">
-        <div class="price">
-        <h1>{{this.Subscription_Price}}€</h1> 
-        <small>/ month</small>
-        </div>
-        <div class="shadow-price">
-            <div class="table-header">
-                <div class="title-price">
-                    <img alt="modifier" src="{{this.Subscription_ImagePath}}" width="40" height="40">
-                    <h1>{{this.Subscription_Name}}</h1>
+    <section class="pricing">
+        {{#each subscriptions}}
+        <div class="table">
+            <div class="price">
+            <h1>{{this.Subscription_Price}}€</h1> 
+            <small>/ month</small>
+            </div>
+            <div class="shadow-price">
+                <div class="table-header">
+                    <div class="title-price">
+                        <img alt="modifier" src="{{this.Subscription_ImagePath}}" width="40" height="40">
+                        <h1>{{this.Subscription_Name}}</h1>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div class="table-body">
-            <ul>
-            <li>
-                <i class="fa fa-check"></i>
-                <span>Maximume de livres reservables : {{this.Subscription_Max_Book}}</span>
-            </li> 
-            </ul>
+            <div class="table-body">
+                <ul>
+                <li>
+                    <i class="fa fa-check"></i>
+                    <span>Maximume de livres reservables : {{this.Subscription_Max_Book}}</span>
+                </li> 
+                </ul>
+            </div>
+            <button class="subscribeButton" data-id="{{this.Id_Subscription}}">Sélectionner</button>
         </div>
-        <button class="subscribeButton" data-id="{{this.Id_Subscription}}">Sélectionner</button>
-    </div>
-    <script>
-        var subscribeButtons = document.getElementsByClassName('subscribeButton');
-        
-        for (var i = 0; i < subscribeButtons.length; i++) {
-            subscribeButtons[i].addEventListener('click', function() {
-                var subscriptionId = this.dataset.id;
-                fetch('/subscribe/'+ subscriptionId, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    credentials: 'include',
-                })
-                .then(response => response.json())
-                .then(data => {
-                    alert(data.message);
-                })
-                .catch((error) => {
-                    console.error('Error:', error);
+        {{/each}}
+        <script>
+            var subscribeButtons = document.getElementsByClassName('subscribeButton');
+            
+            for (var i = 0; i < subscribeButtons.length; i++) {
+                subscribeButtons[i].addEventListener('click', function() {
+                    var subscriptionId = this.dataset.id;
+                    fetch('/subscribe/'+ subscriptionId, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        credentials: 'include',
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        alert(data.message);
+                    })
+                    .catch((error) => {
+                        console.error('Error:', error);
+                    });
                 });
-            });
-        }
-    </script>
-    {{/each}}
-    {{#if message }}
-        <h4 class="message-alert">{{message}}</h4>
-    {{/if}}
-</section>
+            }
+        </script>
+        {{#if message }}
+            <h4 class="message-alert">{{message}}</h4>
+        {{/if}}
+    </section>
 
 <!-- *********************FOOTER************************ -->
 
@@ -116,7 +116,7 @@
               <div class="link-boxes">
                 <ul class="box">
                   <li class="link_name">Company</li>
-                  <li><a href="#">Home</a></li>
+                  <li><a href="/index-connected">Home</a></li>
                   <li><a href="#">Contact us</a></li>
                   <li><a href="#">About us</a></li>
                   <li><a href="#">Get started</a></li>
@@ -130,8 +130,8 @@
                 </ul>
                 <ul class="box">
                   <li class="link_name">Account</li>
-                  <li><a href="#">Profile</a></li>
-                  <li><a href="#">My account</a></li>
+                  <li><a href="/user/{{Users_id}}">Profile</a></li>
+                  <li><a href="/user/{{Users_id}}">My account</a></li>
                   <li><a href="#">Prefrences</a></li>
                   <li><a href="#">Purchase</a></li>
                 </ul>
