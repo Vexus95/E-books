@@ -114,8 +114,6 @@ exports.getUserById = (req, res, next) => {
     });
 };
 
-
-
 exports.logout = (req, res) => {
     res.cookie('jwt', '', { expires: new Date(Date.now() - 10 * 1000) });
     res.redirect('/');
@@ -169,7 +167,7 @@ exports.searchBook = (req, res, next) => {
 
 
 exports.getBooks = (req, res, next) => {
-    pool.query('SELECT * FROM book LIMIT 3', (error, results) => {
+    pool.query('SELECT * FROM book ORDER BY Book_Title ASC', (error, results) => {
         if (error) {
             console.log(error);
             return res.status(500).send('Erreur lors de la récupération des livres.');
@@ -186,19 +184,21 @@ exports.getBooks = (req, res, next) => {
 exports.getBookById = (req, res, next) => {
     const id = req.params.id;
 
-    pool.query('SELECT * FROM book WHERE Id_Book = ?', [id], (error, results) => {
+    pool.query('SELECT b.*, a.Author_Name, a.Author_Surname, g.Genre_Name FROM book AS b INNER JOIN writed AS wb ON b.Id_Book = wb.Id_Book INNER JOIN authors AS a ON a.Id_Author = wb.Id_Author INNER JOIN belong_to AS bt ON b.Id_Book = bt.Id_Book INNER JOIN genre AS g ON g.Id_Genre = bt.Id_Genre WHERE b.Id_Book = ?', [id], (error, results) => {
         if (error) {
             console.log(error);
             return res.status(500).send({ message: 'Une erreur est survenue lors de l\'interrogation de la base de données.' });
         }
         if (results.length > 0) {
             res.locals.book = results[0];
+            res.locals.genres = results[0].Genre_Name;
             next();
         } else {
           return res.status(404).send({ message: 'Aucun livre trouvé avec cet ID.' });
         }
     });
 };
+
 
 exports.getTopSellingBooks = (req, res, next) => {
     // Modifier la requête pour trier les livres par ventes en ordre décroissant et limiter à 3
@@ -216,20 +216,39 @@ exports.getTopSellingBooks = (req, res, next) => {
     });
 };
 
-exports.getBooksByGenre = (req, res) => {
+exports.getBooksByGenre = (req, res, next) => {
     const genre = req.params.genre; // Récupérer le genre à partir du paramètre de route
 
-    pool.query('SELECT b.* FROM book AS b INNER JOIN belong_to AS bt ON b.Id_Book = bt.Id_Book INNER JOIN genre AS g ON g.Id_Genre = bt.Id_Genre WHERE g.Genre_Name = ?',[genre],(error, results) => {
-            if (error) {
-                console.log(error);
-                return res.status(500).send('Erreur lors de la récupération des livres.');
-            }
-
-            // Envoyer les résultats (les livres) à la vue
-            res.status(200).render('index', { booksByGenre: results });
+    pool.query('SELECT b.* FROM book AS b INNER JOIN belong_to AS bt ON b.Id_Book = bt.Id_Book INNER JOIN genre AS g ON g.Id_Genre = bt.Id_Genre WHERE g.Genre_Name = ? ORDER BY b.Book_Title ASC',[genre],(error, results) => {
+        if (error) {
+            console.log(error);
+            return res.status(500).send('Erreur lors de la récupération des livres.');
         }
-    );
-}; 
+
+        // Stocker les résultats (les livres) dans res.locals
+        res.locals.booksByGenre = results;
+
+        // Passer au prochain middleware
+        next();
+    });
+};
+
+exports.getBooksByAuthor = (req, res, next) => {
+    const author = req.params.author; // Récupérer l'auteur à partir du paramètre de route
+    
+    pool.query('SELECT b.* FROM book AS b INNER JOIN writed AS wb ON b.Id_Book = wb.Id_Book INNER JOIN authors AS a ON a.Id_Author = wb.Id_Author WHERE a.Author_Name = ? ORDER BY b.Book_Title ASC',[author], (error, results) => {
+        if (error) {
+            console.log(error);
+            return res.status(500).send('Erreur lors de la récupération des livres.');
+        }   
+
+        // Stocker les résultats (les livres) dans res.locals
+        res.locals.booksByAuthor = results;
+
+        // Passer au prochain middleware
+        next();
+    });
+}
 
 exports.getReservedBooks = (req, res, next) => {
     const userId = req.user.id;
@@ -303,6 +322,37 @@ exports.reserveBook = (req, res) => {
     });
 };
 
+exports.getAuthors = (req, res, next) => {
+
+    pool.query('SELECT * FROM authors', (error, results) => {
+        if (error) {
+            console.log(error);
+            return res.status(500).send({ message: 'Une erreur est survenue lors de l\'interrogation de la base de données.' });
+        }
+        if (results.length > 0) {
+            res.locals.authors = results; // Stocker les auteurs dans res.locals.authors
+            next(); // Passer au prochain middleware
+        } else {
+            return res.status(404).send({ message: 'Aucun auteur trouvé.' });
+        }
+    });
+};
+
+exports.getGenres = (req, res, next) => {
+
+    pool.query('SELECT * FROM genre', (error, results) => {
+        if (error) {
+            console.log(error);
+            return res.status(500).send({ message: 'Une erreur est survenue lors de l\'interrogation de la base de données.' });
+        }
+        if (results.length > 0) {
+            res.locals.genres = results; // Stocker les genres dans res.locals.genres
+            next(); // Passer au prochain middleware
+        } else {
+            return res.status(404).send({ message: 'Aucun genre trouvé.' });
+        }
+    });
+};
 
 exports.addBook = (req, res) => {
     const { title, author, link } = req.body; // Ces champs dépendent des données requises pour créer un livre dans votre base de données

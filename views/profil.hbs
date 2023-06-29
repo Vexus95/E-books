@@ -23,14 +23,13 @@
                     </button>
                 </form>
               </div>
-
               <ol>
-                <li><a class="titre" href="#">E-book</a></li>
-                <li><a class="titre" href="#">Ouvrage papier</a></li>
+                <li><a class="titre" href="/e-book-connected">E-book</a></li>
+                <li><a class="titre" href="/e-book-connected">Ouvrage papier</a></li>
                 <div class="profile-menu">
                   <li><img src="/images/user.png" class="profile-icon" alt="Image profil"></a></li>
                   <div class="menu">
-                        <a href="profil" >Mon Profil</a>
+                        <a href="" >Mon Profil</a>
                         <a href="/logout">Se Déconnecter</a>      
                   </div>
                 </div>
@@ -38,46 +37,49 @@
           </nav>
         <div class="profilcontainer">
             <div class="picture">
-                <p>Profil</p>
+                <i><br><p class="title">Profil</p>
+                  <a href="#">
+                    <img alt="modifier" src="/images/editing.png" width="20" height="20" style="float: right; margin-right:20px; margin-top: -35px;">
+                  </a>
+                </i>
                 <img src="/images/Purple Pink Gradient Man 3D Avatar 1.png" alt="Avatar">
-                <p>Nom : {{user.Users_Lastname}} {{user.Users_Firstname}}</p> <!-- Ici le nom de l'utilisateur -->
+                <p style="">Nom : {{user.Users_Lastname}} {{user.Users_Firstname}}</p> <!-- Ici le nom de l'utilisateur -->
             </div>
             <div>
                 <div class="Connexion">
-                    <p class="title">Connexion & Sécurité</p>
-                    <p>Email : {{user.Users_Mail}}</p> <!-- Ici l'email de l'utilisateur -->
-                    <p>Mot de passe : ****</p> <!-- Pour des raisons de sécurité, on ne devrait pas afficher le mot de passe -->
+                  <i><p class="title">Connexion & Sécurité</p>
+                    <a href="#">
+                      <img alt="modifier" src="/images/editing.png" width="20" height="20" style="float: right; margin-right:20px; margin-top: -35px;">
+                    </a>
+                  </i>
+                      <ul>
+                        <p>Email : {{user.Users_Mail}}</p> <!-- Ici l'email de l'utilisateur -->
+                        <p>Numéro de téléphone : {{user.Users_Phonenumber}}</p>
+                        <p>Mot de passe : </p> <!-- Pour des raisons de sécurité, on ne devrait pas afficher le mot de passe -->
+                      </ul>
                 </div>
                 <div class="abonnement">
-                    <p class="title"> Abonnement</p>
-                    <p>Type : {{user.Subscription_Name}}</p> <!-- Ici le type d'abonnement de l'utilisateur -->
-                    <ul>Avantages
-                      <li>Avantage 1</li> <!-- Ces avantages devraient aussi provenir de la base de données -->
-                      <li>Avantage 2</li>
-                      <li>Avantage 3</li>
-                    </ul>
+                    <i>
+                      <p class="title"> Abonnement</p>
+                      <a href="#" style="float: right; margin-top: -30px; margin-right: 20px;">Changement d'abonnement</a>
+                    </i>
+                    <img alt="modifier" src="/images/prestations-premium_1.png" width="50" height="50" style="display:block; margin-left:auto; margin-right:auto;">
+                    <p style="padding:0;text-align:center; ">{{user.Subscription_Name}}</p>
                 </div>
             </div>
         </div>
-        <h2>Livres en cours</h2>
-        <div class="container">
-              <div class="row">
-                  {{#each books}}
-                      <article class="card">
-                          <img class="card__background" src="{{this.Book_ImagePath}}" alt="{{this.Book_Title}}" width="280"/>
-                          <div class="card__content | flow">
-                              <div class="card__content--container | flow">
-                                  <h2 class="card__title">{{this.Book_Title}}</h2>
-                                  <p class="card__description">
-                                      {{this.Book_Description}}
-                                  </p>
-                              </div>
-                                  <a href="/book-connected/{{this.Id_Book}}"><button class="card__button">Read more</button></a>
-                          </div>
-                      </article>
-                  {{/each}}
+        <br><h2>Ma bibliothèque :</h2>
+          <div class="livres">
+            <div class="row">
+              <div class="card-scroll-container">
+              {{#each books}}
+                <article class="card">
+                    <img class="card__background" src="{{this.Book_ImagePath}}" alt="{{this.Book_Title}}" width="280"/>
+                </article>
+              {{/each}}
               </div>
             </div>
+          </div>
         <footer>
             <div class="content">
               <div class="top">
@@ -98,7 +100,7 @@
               <div class="link-boxes">
                 <ul class="box">
                   <li class="link_name">Company</li>
-                  <li><a href="#">Home</a></li>
+                  <li><a href="/index-connected">Home</a></li>
                   <li><a href="#">Contact us</a></li>
                   <li><a href="#">About us</a></li>
                   <li><a href="#">Get started</a></li>
@@ -134,7 +136,5 @@
               </div>
             </div>
           </footer>
-    
-        <script src="JS/script.js"></script>
     </body>
 </html>

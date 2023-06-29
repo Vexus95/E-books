@@ -24,6 +24,7 @@ app.use(express.json());
 app.use(cookieParser());
 
 app.set('view engine', 'hbs');
+app.set('view options', { layout: false });
 
 app.use(express.static('views/images')); 
 

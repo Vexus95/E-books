@@ -1,245 +1,14 @@
-/* CARD COMPONENT */
-.card {
-    flex: 1 1 21rem;
-    display: grid;
-    place-items: center;
-    width: 25.5rem;
-    height: 25rem;
-    overflow: hidden;
-    border-radius: 0.125rem;
-    box-shadow: 0.50rem 0.50rem 0.2rem rgba(53, 62, 152, 1);
-    margin: 1px 10px;
-  }
-  
-
-.card > * {
-    grid-column: 1 / 2;
-    grid-row: 1 / 2;
+h2{
+    margin-left: 5%;
+    font-family: 'Kotta One'; 
 }
 
-.card__background {
-    object-fit: cover;
-    max-width: 100%;
-    height: 100%;
+p {
+    font-family: 'Jacques Francois';
+    padding: 10px;
+    font-size: 18px;
 }
 
-.card__content {
-    --flow-space: 0.9375rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-self: flex-end;
-    height: auto;
-    padding: 12% 3rem 1.875rem;
-    margin-top: -50px;
-    background: linear-gradient(
-      180deg,
-      hsla(0, 0%, 0%, 0) 0%,
-      hsla(0, 0%, 0%, 0.3) 10%,
-      hsl(0, 0%, 0%) 100%
-    );
-}
-
-.card__content--container {
---flow-space: 1.25rem;
-}
-
-.card:hover .card__title {
-    opacity: 1;
-  }
-
-
-.card__title::after {
-    content: "";
-    position: absolute;
-    height: 0.3125rem;
-    width: calc(100% + 1.25rem);
-    bottom: calc((1.25rem - 0.5rem) * -1);
-    left: -1.25rem;
-    background-color: var(--brand-color);
-}
-
-.card__button {
-    padding: 0.75em 1.6em;
-    width: fit-content;
-    width: -moz-fit-content; 
-    font-variant: small-caps;
-    font-weight: bold;
-    border-radius: 0.45em;
-    border: none;
-    background-color: var(--brand-color);
-    font-family: var(--font-title);
-    font-size: 1.125rem;
-    color: var(--black);
-}
-
-.card__description{
-  color:white;
-  text-align: center;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  width: 200px; 
-}
-
-.card__button:focus {
-outline: 2px solid black;
-outline-offset: -5px;
-}
- /* Media queries for the responsiveness of the page */
-  @media screen and (max-width: 600px) {
-    form{
-      width: 25rem;
-    }
-  }
-  
-  @media screen and (max-width: 400px) {
-    form{
-      width: 20rem;
-    }
-  }
-  
-@media (any-hover: hover) and (any-pointer: fine) {
-.card__content {
-    transform: translateY(62%);
-    transition: transform 500ms ease-out;
-    transition-delay: 500ms;
-}
-
-
-.card__title::after {
-    opacity: 0;
-    transform: scaleX(0);
-    transition: opacity 1000ms ease-in, transform 500ms ease-out;
-    transition-delay: 500ms;
-    transform-origin: right;
-}
-
-.card__background {
-    transition: transform 500ms ease-in;
-}
-
-.card__content--container > :not(.card__title),
-.card__button {
-    opacity: 0;
-    transition: transform 500ms ease-out, opacity 500ms ease-out;
-}
-
-.card:hover,
-.card:focus-within {
-    transform: scale(1.05);
-    transition: transform 500ms ease-in;
-}
-
-.card:hover .card__content,
-.card:focus-within .card__content {
-    transform: translateY(0);
-    transition: transform 500ms ease-in;
-}
-
-.card:focus-within .card__content {
-    transition-duration: 0ms;
-}
-
-.card:hover .card__background,
-.card:focus-within .card__background {
-    transform: scale(1.3);
-}
-
-.card:hover .card__content--container > :not(.card__title),
-.card:hover .card__button,
-.card:focus-within .card__content--container > :not(.card__title),
-.card:focus-within .card__button {
-    opacity: 1;
-    transition: opacity 500ms ease-in;
-    transition-delay: 1000ms;
-}
-
-.card:hover .card__title::after,
-.card:focus-within .card__title::after {
-    opacity: 1;
-    transform: scaleX(1);
-    transform-origin: left;
-    transition: opacity 500ms ease-in, transform 500ms ease-in;
-    transition-delay: 500ms;
-}
-}
-
-.container{
-    width:1100px;
-    max-width:100%;
-    margin:0 160px;
-}
-
-.row{
-    display:flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.outline{
-    background-color: #353E981C;
-    border-radius: 15px;
-    width: 1310px;
-    height: 415px;
-    margin: 50px auto;
-} 
-
-.outline.best-sellers {
-    overflow-x: auto; /* Ajout du défilement horizontal */
-    overflow-y: hidden; /* Désactivation du défilement vertical */
-}
-
-.card-scroll-container {
-    display: flex; /* Afficher les cartes en tant que flex-items */
-    flex-wrap: nowrap; /* Empêcher le retour à la ligne des cartes */
-}
-
-.card-scroll-container .card {
-    flex: 0 0 auto; /* Réduire la taille des cartes en tant que flex-items */
-    margin-right: 50px; /* Espacement entre les cartes */
-    transform: scale(0.7); /* Réduire la taille des éléments */
-    border: none;
-}
-
-.pre-btn,
-.nxt-btn {
-  border: none;
-  background: none;
-}
-
-
-.pre-btn{
-    left: 0;
-    transform: rotate(180deg);
-}
-
-.nxt-btn{
-    right: 0;
-    margin-left: 5px;
-}
-
-.pre-btn img,
-.nxt-btn img{
-    opacity: 0.6;
-    width: 50px;
-}
-
-.pre-btn:hover img,
-.nxt-btn:hover img{
-    opacity: 1;
-}
-
-body {
-  background-color: #353d980a;
-}
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: 'Jacques Francois';
-}
 
 .profilcontainer {
     display: flex;
@@ -269,43 +38,67 @@ body {
 .profilcontainer .picture {
     background-color: rgba(53, 62, 152, 0.11);
     width: 30vw;
-    height: 41vh;
     border-radius: 15px;
 }
   
 .profilcontainer .Connexion {
     background-color: rgba(53, 62, 152, 0.11);
     width:60vw;
-    height: 20vh;
+    height: 12vw;
     margin-left: 1%;
     border-radius: 15px;
+}
+
+.profilcontainer .Connexion ul {
+    margin-left: 6%;
 }
   
 .profilcontainer .abonnement {
     background-color: rgba(53, 62, 152, 0.11);
     width:60vw;
-    height: 20vh;
+    height: 11vw;
     margin-left: 1%;
     margin-top: 1vh;
     border-radius: 15px;
 }
 
 .profilcontainer .abonnement ul{
+    margin-left: 50%;
+}
 
+.tel{
+    margin-left: 50%; 
 }
 
 .livres {
     display: flex;
     justify-content: center;
-    margin-left: 5%;
-    margin-right: 2%;
-    margin-bottom: 1%;
     background-color: rgba(53, 62, 152, 0.11);
-    width: 90vw;
-    height: 30vh;
-    border-radius: 15px;
+    border-radius: 15px; 
+    overflow-x: auto; /* Ajout du défilement horizontal */
+    overflow-y: hidden; /* Désactivation du défilement vertical */
+    width: 1310px;
+    height: 325px;
+    padding-top: 5%;
+    margin: 50px auto;
+    overflow-x: auto; /* Ajout du défilement horizontal */
+    overflow-y: hidden; /* Désactivation du défilement vertical */
 }
 
-h2{
-    margin-left: 5%; 
+.row{
+    display:flex;
+    align-items: center;
+    justify-content: space-between;
+}   
+
+.card-scroll-container {
+    display: flex; /* Afficher les cartes en tant que flex-items */
+    flex-wrap: nowrap; /* Empêcher le retour à la ligne des cartes */
+}
+
+.card-scroll-container .card {
+    flex: 0 0 auto; /* Réduire la taille des cartes en tant que flex-items */
+    transform: scale(0.7); /* Réduire la taille des éléments */
+    border: none;
+    margin-right: 0.1px;
 }
