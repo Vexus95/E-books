@@ -33,17 +33,22 @@
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    margin-top: -7%;
+    margin-top: -5%;
     margin-right: 10%;
   }
 
-  .rendre {
+.rendre {
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    margin-top: -7%;
+    margin-top: -5%;
     margin-right: 10%;
-  }
+}
+
+.rendre a{
+ margin-left: 10%;
+
+}
 
 button{
     background-color: rgba(53, 62, 152, 0.29);
@@ -76,10 +81,6 @@ button{
     padding-left: 10px;
 }
 
-.genre{
-  display: flex;
-  padding-left: 5px
-}
 
 .rating {
     display: inline-block;

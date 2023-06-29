@@ -14,6 +14,10 @@ router.get('/login', (req, res) =>{
     res.render('login');
 });
 
+router.get('/subscribe/:id', authController.verifyAuth, authController.getSubscriptions, (req,res) =>{
+    res.render('subscribe', { Users_id: req.user.id, subscriptions: res.locals.subscriptions});
+})
+
 router.get('/e-book', authController.getBooks, authController.getGenres, authController.getAuthors, (req, res) =>{
     res.render('e-book', { books: res.locals.books, genres: res.locals.genres, authors:res.locals.authors});
 });
@@ -42,12 +46,12 @@ router.get('/index-connected', authController.verifyAuth, authController.getBook
     res.render('index', {Users_id: req.user.id, books: res.locals.books, bestbooks: res.locals.bestbooks });
 });
 
-router.get('/book-connected/:id', authController.verifyAuth, authController.getBookById, (req, res) => {
-    res.render('book', {Users_id: req.user.id, book: res.locals.book });
+router.get('/book-connected/:id', authController.verifyAuth, authController.getBookById, authController.checkIfBookIsReserved, (req, res) => {
+    res.render('book', {Users_id: req.user.id, book: res.locals.book});
 });
 
-router.get('/searchBook-connected', authController.verifyAuth, authController.searchBook, (req, res) => {
-    return res.render('book', { Users_id: req.user.id, book: res.locals.book });
+router.get('/searchBook-connected', authController.verifyAuth, authController.searchBook, authController.checkIfBookIsReservedInSearchBar,(req, res) => {
+    return res.render('book', { Users_id: req.user.id, book: res.locals.book, id : res.locals.Id_Book });
 });
 
 router.get('/e-book-connected', authController.verifyAuth, authController.getBooks, authController.getGenres, authController.getAuthors, (req, res) =>{
@@ -62,7 +66,11 @@ router.get('/e-book-connected/author/:author', authController.getBooksByAuthor, 
     res.render('e-book', { Users_id: req.user.id, books: res.locals.booksByAuthor, genres: res.locals.genres, authors:res.locals.authors});
 });
 
-router.post('/book-connected/:bookId', authController.verifyAuth, authController.reserveBook);
+router.post('/subscribe/:subscriptionId',authController.verifyAuth, authController.subscribe);
+
+router.post('/book-connected-reserve/:bookId', authController.verifyAuth, authController.reserveBook);
+
+router.post('/book-connected-rendre/:bookId', authController.verifyAuth, authController.returnBook);
 
 router.get('/logout', authController.logout);
 

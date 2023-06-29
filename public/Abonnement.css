@@ -1,0 +1,182 @@
+h1,h2{
+    font-family: 'Kotta One'; 
+}
+
+body{
+    font-family: 'Jacques Francois', sans-serif;
+}
+
+*{
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+.pricing{
+
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 2em;
+}
+
+.table{
+    margin: 4em 1.5em;
+    text-align: center;
+    position: relative;
+}
+
+.table-header{
+    width: 20em;
+    height: 13em;
+    background: linear-gradient(331deg, #8C93DA,#353E98);
+    border-radius: 15px;
+    display: flex;
+    justify-content: center;
+    align-items:center;
+    clip-path: polygon(0 0, 100% 0, 100% 80%, 70% 100%, 0 50%);
+}
+
+.shadow-price{
+    filter: drop-shadow(0 1em 1em rgba(0, 0, 0, 0.2));
+}
+
+.price{
+    background: #fff;
+    width: 7em;
+    height: 7em;
+    position: absolute;
+    top: -3.5em;
+    left: 50%;
+    transform: translate(-50%);
+    padding: 1.5em 1em 1em 1em;
+    border-radius: 15px;
+    z-index: 1;
+    box-shadow: 0 1em 1em rgba(0, 0, 0, 0.3);
+}
+
+.price h1{
+    font-size: 2.5em;
+    color: #282F72;
+}
+
+.price small{
+    color: #999;
+}
+
+.title-price{
+    color:#fff;
+}
+
+.title-price h1{
+    margin: 0.3em;
+    font-size: 1.8em;
+    letter-spacing: 4px;
+    margin-bottom: 65px;
+}
+
+.title-price p{
+    font-size: 0.6em;
+    letter-spacing: 1px;
+}
+
+.table{
+    background: #8c92da2f;
+    border-radius: 15px;
+    /*margin: 2em 1.5em;
+    padding: 0.7em;
+    height: auto;*/
+}
+
+.table-body{
+    width: 18em;
+    margin: -9em auto 0 auto;
+    padding: 8em 1em 1em 1em;
+    background: #fff;
+    border-radius: 15px;
+    box-shadow: 0 0 4em rgb(0, 0, 0, .1);
+}
+
+
+
+.body-title h2{
+    margin: 1em 0 0.2em 0;
+}
+
+.body-title p{
+    color: #777;
+}
+
+.table ul{
+    list-style: none;
+    margin: 2em 0;
+}
+
+.table li{
+    padding: 1.3em 0;
+    font-size:0.9em;
+}
+
+.table li i{
+    margin-right: 0.5em;
+}
+
+.table li .fa-check{
+    color:#03d23a;
+}
+
+.table li .fa-times{
+    color:#d20303;
+}
+
+li{
+    margin-bottom:10px;
+}
+
+/*Griser les avantages de l'abonnement*/
+li:has(.fa.fa-check) {
+    background: #eee;
+}
+
+.table button{
+    background: linear-gradient(331deg, #8c92da,#9c9fd996);
+    color: #fff;
+    border: none;
+    border-radius: 9px;
+    padding: 0.8em 1.3em;
+    text-transform: uppercase;
+    font-weight: 600;
+    position: center;
+    margin-bottom: 7px;
+    margin-top: 6px;
+    cursor: pointer;
+}
+
+
+.table button:hover {
+    background: linear-gradient(331deg, #9c9fd996,#8c92da);
+}
+
+/* Change the width of the three columns to 100% 
+  (to stack horizontally on small screens) */
+  @media only screen and (max-width: 600px) {
+    .pricing {
+      width: 100%;
+    }
+  }
+
+  .table:hover {
+    box-shadow: 0 0 52px 0 
+    rgb(215, 133, 9)
+  }
+
+
+  .title-price img{
+    margin-left:250px;
+    margin-right: auto;
+  }
+
+
+

@@ -50,39 +50,58 @@
                         <p class="note">Note : {{book.Book_Rating}}/10</p>
                     </div>
                     </div>
-                    {{#if book.reservedByUser}}
+                    {{#if bookReserved}}
                         <div class="rendre">
                             <button id="rendreButton" data-id="{{book.Id_Book}}" type="button">Rendre</button>
-                            <a href="{{book.pdfLink}}">Voir le PDF</a>
+                            <a href="{{book.Book_Link}}">Voir le PDF</a>
                         </div>
+                        <script>
+                            document.getElementById('rendreButton').addEventListener('click', function() {
+                              var bookId = this.dataset.id; // Récupère l'ID du livre à partir de l'attribut data-id
+                              fetch('/book-connected-rendre/' + bookId, { // Remplacer cette URL par l'URL correcte pour rendre un livre
+                                  method: 'POST', // ou 'GET', selon la méthode que votre route utilise
+                                  headers: {
+                                      'Content-Type': 'application/json',
+                                  },
+                                  credentials: 'include', // Important pour envoyer les cookies avec la requête
+                              })
+                              .then(response => response.json())
+                              .then(data => {
+                                  alert(data.message);
+                              })
+                              .catch((error) => {
+                                  console.error('Erreur:', error);
+                              });
+                          });
+                        </script>
                     {{else}}
                         <div class="emprunter">
                             <button id="reserveButton" data-id="{{book.Id_Book}}" type="button">Emprunter</button>
                         </div>
+                        <script>
+                          document.getElementById('reserveButton').addEventListener('click', function() {
+                              var bookId = this.dataset.id; // Récupère l'ID du livre à partir de l'attribut data-id
+                              fetch('/book-connected-reserve/' + bookId, { // Remplacer cette URL par l'URL correcte pour réserver un livre
+                                  method: 'POST', // ou 'GET', selon la méthode que votre route utilise
+                                  headers: {
+                                      'Content-Type': 'application/json',
+                                  },
+                                  credentials: 'include', // Important pour envoyer les cookies avec la requête
+                              })
+                              .then(response => response.json())
+                              .then(data => {
+                                  alert(data.message);
+                              })
+                              .catch((error) => {
+                                  console.error('Error:', error);
+                              });
+                          });
+                        </script>
                     {{/if}}
                     {{#if message }}
                       <h4 class="message-alert">{{message}}</h4>
                     {{/if}}
                 </div>
-                <script>
-                    document.getElementById('reserveButton').addEventListener('click', function() {
-                        var bookId = this.dataset.id; // Récupère l'ID du livre à partir de l'attribut data-id
-                        fetch('/book-connected/' + bookId, { // Remplacer cette URL par l'URL correcte pour réserver un livre
-                            method: 'POST', // ou 'GET', selon la méthode que votre route utilise
-                            headers: {
-                                'Content-Type': 'application/json',
-                            },
-                            credentials: 'include', // Important pour envoyer les cookies avec la requête
-                        })
-                        .then(response => response.json())
-                        .then(data => {
-                            alert(data.message);
-                        })
-                        .catch((error) => {
-                            console.error('Error:', error);
-                        });
-                    });
-                </script>
                 <div class="resume">
                     <p>{{book.Book_Description}}</p>
                 </div>

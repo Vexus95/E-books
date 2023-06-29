@@ -121,10 +121,11 @@ exports.logout = (req, res) => {
 
 exports.subscribe = (req, res) => {
     const userId = req.user.id; // l'ID de l'utilisateur est généralement stocké dans req.user.id après authentification
-    const subscriptionId = req.body.subscriptionId; // l'ID de l'abonnement est envoyé dans le corps de la requête
+    const subscriptionId = req.params.subscriptionId; // l'ID de l'abonnement est envoyé dans le corps de la requête
 
+    console.log(userId, subscriptionId)
     // Vérifiez d'abord si l'abonnement existe
-    pool.query('SELECT * FROM subscriptions WHERE Id_Subscription = ?', [subscriptionId], (error, results) => {
+    pool.query('SELECT * FROM subscription WHERE Id_Subscription = ?', [subscriptionId], (error, results) => {
         if (error) {
             console.log(error);
             return res.status(500).send('Erreur lors de la vérification de l\'existence de l\'abonnement.');
@@ -135,7 +136,7 @@ exports.subscribe = (req, res) => {
         }
 
         // Mettez à jour l'abonnement de l'utilisateur
-        pool.query('UPDATE Users SET subscription_id = ? WHERE id = ?', [subscriptionId, userId], (error, results) => {
+        pool.query('UPDATE users SET Id_Subscription = ? WHERE Users_id = ?', [subscriptionId, userId], (error, results) => {
             if (error) {
                 console.log(error);
                 return res.status(500).send('Erreur lors de la mise à jour de l\'abonnement.');
@@ -154,10 +155,11 @@ exports.searchBook = (req, res, next) => {
             console.log(error);
             return res.status(500).send({ message: 'Une erreur est survenue lors de l\'interrogation de la base de données.' });
         }
-        
+
         if (results.length > 0) {
             // Stocke les livres dans res.locals.books et rend la page du livre
             res.locals.book = results[0];
+            res.locals.Id_Book = results[0].Id_Book;
             next();
         } else {
           return res.status(404).send({ message: 'Aucun livre trouvé avec ce titre.' });
@@ -191,7 +193,6 @@ exports.getBookById = (req, res, next) => {
         }
         if (results.length > 0) {
             res.locals.book = results[0];
-            res.locals.genres = results[0].Genre_Name;
             next();
         } else {
           return res.status(404).send({ message: 'Aucun livre trouvé avec cet ID.' });
@@ -265,6 +266,22 @@ exports.getReservedBooks = (req, res, next) => {
         next();
     });
 };
+
+exports.getSubscriptions = (req, res, next) => {
+    pool.query('SELECT * FROM subscription ORDER BY Id_Subscription DESC LIMIT 3', (error, results) => {
+        if (error) {
+            console.log(error);
+            return res.status(500).send('Erreur lors de la récupération des abonnements.');
+        }
+
+        // Ajouter les résultats (les abonnements) à res.locals
+        res.locals.subscriptions = results;
+
+        // Passer au prochain middleware
+        next();
+    });
+};
+
  
 exports.reserveBook = (req, res) => {
     const userId = req.user.id;
@@ -282,7 +299,7 @@ exports.reserveBook = (req, res) => {
         switch (subscriptionId) {
             case 1:
                 maxBooks = 0; // Pas de réservation pour l'abonnement 1
-                break;
+                return res.status(404).send({ message: 'Vous ne pouvez pas reserver de livre. Choisissez un abonnement avant. ' });
             case 2:
                 maxBooks = 1; // 1 réservation pour l'abonnement 2
                 break;
@@ -315,10 +332,65 @@ exports.reserveBook = (req, res) => {
                     console.log(error);
                     return res.status(500).send('Erreur lors de la réservation du livre.');
                 }
-
                 res.status(200).send({message:'Le livre a été réservé avec succès.'});
             });
         });
+    });
+};
+
+exports.returnBook = (req, res) => {
+    const userId = req.user.id;
+    const bookId = req.params.bookId;
+
+        // Supprimer la réservation du livre pour l'utilisateur
+        pool.query('DELETE FROM borrow WHERE Users_id = ? AND Id_Book = ?', [userId, bookId], (error, results) => {
+            if (error) {
+                console.log(error);
+                return res.status(500).send('Erreur lors de la restitution du livre.');
+            }
+
+            res.status(200).send({message:'Le livre a été retourné avec succès.'});
+        });
+
+};
+
+exports.checkIfBookIsReserved = (req, res, next) => {
+    const userId = req.user.id;
+    const bookId = req.params.id;
+
+    pool.query('SELECT * FROM borrow WHERE Users_id = ? AND Id_Book = ?', [userId, bookId], (error, results) => {
+        if (error) {
+            console.log(error);
+            return res.status(500).send('Erreur lors de la vérification de la réservation du livre.');
+        }
+
+        if (results.length > 0) {
+            res.locals.bookReserved = true;
+        } else {
+            res.locals.bookReserved = false;
+        }
+
+        next();
+    });
+};
+
+exports.checkIfBookIsReservedInSearchBar = (req, res, next) => {
+    const userId = req.user.id;
+    const bookId = res.locals.Id_Book;
+
+    pool.query('SELECT * FROM borrow WHERE Users_id = ? AND Id_Book = ?', [userId, bookId], (error, results) => {
+        if (error) {
+            console.log(error);
+            return res.status(500).send('Erreur lors de la vérification de la réservation du livre.');
+        }
+
+        if (results.length > 0) {
+            res.locals.bookReserved = true;
+        } else {
+            res.locals.bookReserved = false;
+        }
+
+        next();
     });
 };
 
