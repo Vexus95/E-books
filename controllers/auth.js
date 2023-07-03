@@ -448,7 +448,6 @@ exports.getAuthors = (req, res, next) => {
 };
 
 exports.getGenres = (req, res, next) => {
-
     pool.query('SELECT * FROM genre', (error, results) => {
         if (error) {
             console.log(error);
