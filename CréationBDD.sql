@@ -5,7 +5,7 @@ CREATE TABLE Book(
    Book_ImagePath VARCHAR(2000),
    Book_Description VARCHAR(2000),
    Book_PublicationDate DATE,
-   Book_Link Link,
+   Book_Link VARCHAR(2000),
    Book_Reservation INT,
    PRIMARY KEY(Id_Book)
 );
@@ -39,7 +39,7 @@ CREATE TABLE Users(
    Users_Mail VARCHAR(50),
    Users_Phonenumber VARCHAR(50),
    Users_Password VARCHAR(50),
-   Is_Admin LOGICAL,
+   Is_Admin INT,
    Id_Subscription INT,
    PRIMARY KEY(Users_id),
    FOREIGN KEY(Id_Subscription) REFERENCES Subscription(Id_Subscription)
