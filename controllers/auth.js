@@ -146,6 +146,29 @@ exports.subscribe = (req, res) => {
     });
 };
 
+exports.IsAdmin = (req, res, next) => {
+    const userId = req.user.id;
+
+    pool.query('SELECT Is_Admin FROM users WHERE Users_id = ?', [userId], (error, results) => {
+        if (error) {
+            console.log(error);
+            return res.status(500).send({ message: 'Une erreur est survenue lors de l\'interrogation de la base de données.' });
+        }
+
+        if (results.length > 0) {
+            const isAdmin = results[0].Is_Admin;
+
+            if (isAdmin === 1) {
+                res.locals.Is_Admin = true;
+                next(); // L'utilisateur est un admin, donc passez au prochain middleware
+            }else{
+                next();
+            }
+        }
+    });
+};
+
+
 exports.searchBook = (req, res, next) => {
     const { bookTitle } = req.query;
 
@@ -166,8 +189,23 @@ exports.searchBook = (req, res, next) => {
     });
 };
 
-
 exports.getBooks = (req, res, next) => {
+    pool.query('SELECT * FROM book ORDER BY Id_Book DESC LIMIT 4', (error, results) => {
+        if (error) {
+            console.log(error);
+            return res.status(500).send('Erreur lors de la récupération des livres.');
+        }
+
+        // Ajouter les résultats (les livres) à res.locals
+        res.locals.books = results;
+
+        // Passer au prochain middleware
+        next();
+    });
+};
+
+
+exports.getBooksEbooks = (req, res, next) => {
     pool.query('SELECT * FROM book ORDER BY Book_Title ASC', (error, results) => {
         if (error) {
             console.log(error);
@@ -202,7 +240,7 @@ exports.getBookById = (req, res, next) => {
 
 exports.getTopSellingBooks = (req, res, next) => {
     // Modifier la requête pour trier les livres par ventes en ordre décroissant et limiter à 3
-    pool.query('SELECT * FROM book ORDER BY Book_Reservation DESC LIMIT 3', (error, results) => {
+    pool.query('SELECT * FROM book ORDER BY Book_Reservation DESC LIMIT 4', (error, results) => {
         if (error) {
             console.log(error);
             return res.status(500).send('Erreur lors de la récupération des livres.');
@@ -267,7 +305,7 @@ exports.getReservedBooks = (req, res, next) => {
 };
 
 exports.getSubscriptions = (req, res, next) => {
-    pool.query('SELECT * FROM subscription ORDER BY Id_Subscription DESC LIMIT 3', (error, results) => {
+    pool.query('SELECT * FROM subscription ORDER BY Id_Subscription ASC LIMIT 3 OFFSET 1', (error, results) => {
         if (error) {
             console.log(error);
             return res.status(500).send('Erreur lors de la récupération des abonnements.');
@@ -425,33 +463,138 @@ exports.getGenres = (req, res, next) => {
     });
 };
 
-exports.addBook = (req, res) => {
-    const { title, author, link } = req.body; // Ces champs dépendent des données requises pour créer un livre dans votre base de données
+exports.deleteBook = (req, res) => {
+    const { deletetitle } = req.body; // Extrait le titre du livre à supprimer du corps de la requête
 
-    pool.query('INSERT INTO book (Book_Title, Book_Author,Book_Link) VALUES (?, ?, ?)', [title, author, link], (error, results) => {
+    pool.query('SELECT Id_Book FROM book WHERE Book_Title = ?', [deletetitle], (error, results) => {
         if (error) {
             console.log(error);
-            return res.status(500).send('Erreur lors de l\'ajout du livre.');
+            return res.status(500).send({message:'Erreur lors de la récupération de l\'ID du livre.'});
         }
 
-        res.status(200).send('Le livre a été ajouté avec succès.');
+        if (results.length > 0) {
+            const bookId = results[0].Id_Book;
+
+            // Supprimer les relations avec les genres
+            pool.query('DELETE FROM belong_to WHERE Id_Book = ?', [bookId], (error, results) => {
+                if (error) {
+                    console.log(error);
+                    return res.status(500).send({message:'Erreur lors de la suppression des relations de genres.'});
+                }
+            
+                // Supprimer les relations avec les auteurs
+                pool.query('DELETE FROM writed WHERE Id_Book = ?', [bookId], (error, results) => {
+                    if (error) {
+                        console.log(error);
+                        return res.status(500).send({message:'Erreur lors de la suppression des relations des auteurs.'});
+                    }
+
+                    // Supprimer le livre lui-même
+                    pool.query('DELETE FROM book WHERE Id_Book = ?', [bookId], (error, results) => {
+                        if (error) {
+                            console.log(error);
+                            return res.status(500).send({message:'Erreur lors de la suppression du livre.'});
+                        }
+
+                        res.status(200).send({message:'Le livre et ses relations ont été supprimés avec succès.'});
+                    });
+                });
+            });
+        } else {
+            res.status(404).send({message:'Aucun livre trouvé avec ce titre.'});
+        }
     });
 };
 
-exports.deleteBook = (req, res) => {
-    const bookId = req.params.bookId; // l'ID du livre est généralement envoyé dans l'URL, par exemple /books/123 où 123 est l'ID du livre
 
-    pool.query('DELETE FROM books WHERE Id_Book = ?', [bookId], (error, results) => {
-        if (error) {
-            console.log(error);
-            return res.status(500).send('Erreur lors de la suppression du livre.');
+exports.addBook = (req, res) => {
+    const { title, rating, imagelink, description, publicationDate, bookLink, authorName, authorSurname, genreName } = req.body;
+
+    pool.getConnection((err, connection) => {
+        if (err) {
+            console.log(err);
+            return res.status(500).send({message: 'Erreur lors de l\'établissement de la connexion à la base de données.'});
         }
+        
+        connection.beginTransaction(error => {
+            if (error) {
+                console.log(error);
+                return res.status(500).send({message: 'Erreur lors de l\'initiation de la transaction.'});
+            }
 
-        if (results.affectedRows === 0) {
-            return res.status(404).send('Aucun livre trouvé avec cet ID.');
-        }
+            connection.query('SELECT Id_Author FROM authors WHERE Author_Name = ? AND Author_Surname = ?', [authorName, authorSurname], (error, results) => {
+                if (error || results.length === 0) {
+                    return connection.rollback(() => {
+                        console.log(error);
+                        res.status(500).send({message: 'Erreur lors de la recherche de l\'auteur.'});
+                    });
+                }
 
-        res.status(200).send('Le livre a été supprimé avec succès.');
+                const authorId = results[0].Id_Author;
+
+                connection.query('SELECT Id_Genre FROM genre WHERE Genre_Name = ?', [genreName], (error, results) => {
+                    if (error || results.length === 0) {
+                        return connection.rollback(() => {
+                            console.log(error);
+                            res.status(500).send({message: 'Erreur lors de la recherche du genre.'});
+                        });
+                    }
+
+                    const genreId = results[0].Id_Genre;
+
+                    connection.query(
+                        'INSERT INTO book SET ?',
+                        {
+                            Book_Title: title,
+                            Book_Rating: rating,
+                            Book_ImagePath: imagelink,
+                            Book_Description: description,
+                            Book_PublicationDate: publicationDate,
+                            Book_Link: bookLink
+                        },
+                        (error, results) => {
+                            if (error) {
+                                return connection.rollback(() => {
+                                    console.log(error);
+                                    res.status(500).send({message: 'Erreur lors de l\'ajout du livre.'});
+                                });
+                            }
+
+                            const bookId = results.insertId;
+
+                            connection.query('INSERT INTO writed SET ?', { Id_Book: bookId, Id_Author: authorId }, (error, results) => {
+                                if (error) {
+                                    return connection.rollback(() => {
+                                        console.log(error);
+                                        res.status(500).send({message: 'Erreur lors de l\'ajout de l\'auteur du livre.'});
+                                    });
+                                }
+
+                                connection.query('INSERT INTO belong_to SET ?', { Id_Book: bookId, Id_Genre: genreId }, (error, results) => {
+                                    if (error) {
+                                        return connection.rollback(() => {
+                                            console.log(error);
+                                            res.status(500).send({message: 'Erreur lors de l\'ajout du genre du livre.'});
+                                        });
+                                    }
+
+                                    connection.commit(error => {
+                                        if (error) {
+                                            return connection.rollback(() => {
+                                                console.log(error);
+                                                res.status(500).send({message: 'Erreur lors de la finalisation de la transaction.'});
+                                            });
+                                        }
+
+                                        res.status(200).send({message: 'Le livre a été ajouté avec succès.'});
+                                    });
+                                });
+                            });
+                        }
+                    );
+                });
+            });
+        });
     });
 };
 

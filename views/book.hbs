@@ -2,7 +2,7 @@
 <html lang="fr">
     <head>
         <meta charset="UTF-8">
-        <link rel="icon" type="image/png" href="Logo_Solution_Factory_2.png"> <!-- Icon en haut de la page-->
+        <link rel="icon" type="image/png" href="/images/Logo_Solution_Factory_2.png"> <!-- Icon en haut de la page-->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> <!-- Librairie Icon-->
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="/css/Footer.css">
@@ -30,6 +30,9 @@
                   <li><img src="/images/user.png" class="profile-icon" alt="Image profil"></a></li>
                   <div class="menu">
                         <a href="/user/{{Users_id}}" >Mon Profil</a>
+                        {{#if Is_Admin}}
+                        <a href="/admin">Admin</a>
+                        {{/if}}
                         <a href="/logout">Se Déconnecter</a>
                   </div>
                 </div>
@@ -107,7 +110,7 @@
                 </div>
             </div>
         </div>
-        <div class="livres">Test</div>
+        <div class="livres"></div>
         <footer>
             <div class="content">
               <div class="top">
@@ -212,7 +215,7 @@
                 </div>
             </div>
         </div>
-        <div class="livres">Test</div>
+        <div class="livres"></div>
         <footer>
             <div class="content">
               <div class="top">

@@ -2,7 +2,7 @@
 <html lang="fr">
     <head>
         <meta charset="UTF-8">
-        <link rel="icon" type="image/png" href="Logo_Solution_Factory_2.png"> <!-- Icon en haut de la page-->
+        <link rel="icon" type="image/png" href="/images/Logo_Solution_Factory_2.png"> <!-- Icon en haut de la page-->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> <!-- Librairie Icon-->
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="/css/style.css">
@@ -31,6 +31,9 @@
                   <li><img src="/images/user.png" class="profile-icon" alt="Image profil"></a></li>
                   <div class="menu">
                         <a href="/user/{{Users_id}}" >Mon Profil</a>
+                        {{#if Is_Admin}}
+                        <a href="/admin">Admin</a>
+                        {{/if}}
                         <a href="/logout">Se Déconnecter</a>      
                   </div>
                 </div>
@@ -40,9 +43,6 @@
         
             <div class="container">
               <div class="row">
-                <div class="chevron-container">
-                    <button class="pre-btn" id="prevButton"><img src="/images/right-chevron--2.png"></button>
-                </div>
                   {{#each books}}
                       <article class="card">
                           <img class="card__background" src="{{this.Book_ImagePath}}" alt="{{this.Book_Title}}" width="280"/>
@@ -57,37 +57,30 @@
                           </div>
                       </article>
                   {{/each}}
-                <div class="chevron-container">
-                    <button  class="nxt-btn" id="nextButton"><img src="/images/right-chevron--2.png"></button>
-                </div>
               </div>
             </div>
 
 <!-- *********************SECTION DEUX************************ -->
 
             <h2 class="titre">Meilleures ventes</h2> 
-            <div class="outline best-sellers">
-              <div class="outline">
-                <div class="row">
-                  <div class="card-scroll-container">
-                    {{#each bestbooks}}
-                    <article class="card">
-                    <img class="card__background" src="{{this.Book_ImagePath}}" alt="{{this.Book_Title}}" width="280"/>
-                    <div class="card__content | flow">
-                        <div class="card__content--container | flow">
-                            <h2 class="card__title">{{this.Book_Title}}</h2>
-                            <p class="card__description">
-                                {{this.Book_Description}}
-                            </p>
-                        </div>
-                        <a href="/book-connected/{{this.Id_Book}}"><button class="card__button">Read more</button></a>
-                    </div>
-                    </article>
-                    {{/each}}
-                  </div>
-                </div>
+            <div class="container">
+              <div class="row">
+                  {{#each bestbooks}}
+                      <article class="card">
+                          <img class="card__background" src="{{this.Book_ImagePath}}" alt="{{this.Book_Title}}" width="280"/>
+                          <div class="card__content | flow">
+                              <div class="card__content--container | flow">
+                                  <h2 class="card__title">{{this.Book_Title}}</h2>
+                                  <p class="card__description">
+                                      {{this.Book_Description}}
+                                  </p>
+                              </div>
+                                  <a href="/book/{{this.Id_Book}}"><button class="card__button">Read more</button></a>
+                          </div>
+                      </article>
+                  {{/each}}
               </div>
-             </div>
+            </div>
 
     <footer>
         <div class="content">
@@ -173,13 +166,8 @@
               </ol>
           </nav>
             <h2 class="titre">Nouveautés</h2>  
-        
             <div class="container">
               <div class="row">
-                <div class="chevron-container">
-                    <button class="pre-btn" id="prevButton"><img src="/images/right-chevron--2.png"></button>
-                </div>
-
                   {{#each books}}
                       <article class="card">
                           <img class="card__background" src="{{this.Book_ImagePath}}" alt="{{this.Book_Title}}" width="280"/>
@@ -194,35 +182,28 @@
                           </div>
                       </article>
                   {{/each}}
-                <div class="chevron-container">
-                    <button  class="nxt-btn" id="nextButton"><img src="/images/right-chevron--2.png"></button>
-                </div>
               </div>
             </div>
         <!-- *********************SECTION DEUX************************ -->
 
             <h2 class="titre">Meilleures ventes</h2> 
-            <div class="outline best-sellers">
-                <div class="outline">
-                  <div class="row">
-                    <div class="card-scroll-container">
-                      {{#each bestbooks}}
+            <div class="container">
+              <div class="row">
+                  {{#each bestbooks}}
                       <article class="card">
-                      <img class="card__background" src="{{this.Book_ImagePath}}" alt="{{this.Book_Title}}" width="280"/>
-                      <div class="card__content | flow">
-                          <div class="card__content--container | flow">
-                              <h2 class="card__title">{{this.Book_Title}}</h2>
-                              <p class="card__description">
-                                  {{this.Book_Description}}
-                              </p>
+                          <img class="card__background" src="{{this.Book_ImagePath}}" alt="{{this.Book_Title}}" width="280"/>
+                          <div class="card__content | flow">
+                              <div class="card__content--container | flow">
+                                  <h2 class="card__title">{{this.Book_Title}}</h2>
+                                  <p class="card__description">
+                                      {{this.Book_Description}}
+                                  </p>
+                              </div>
+                                  <a href="/book/{{this.Id_Book}}"><button class="card__button">Read more</button></a>
                           </div>
-                          <a href="/book/{{this.Id_Book}}"><button class="card__button">Read more</button></a>
-                      </div>
                       </article>
-                      {{/each}}
-                    </div>
-                  </div>
-                </div>
+                  {{/each}}
+              </div>
             </div>
       <footer>
         <div class="content">

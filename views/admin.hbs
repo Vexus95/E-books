@@ -6,12 +6,10 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> <!-- Librairie Icon-->
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="/css/Footer.css">
-        <link rel="stylesheet" href="/css/Abonnement.css">
+        <link rel="stylesheet" href="/css/Manage_book.css">
         <title>La L'e-brairie</title>
     </head>
-
     <body>
-        {{#if Users_id}}
         <nav>
             <div class="logo">
                 <a href="/index-connected" ><img src="/images/Logo_Solution_Factory_2.png" alt="Logo La l'e-brairie"  width="100" height="100"></a>
@@ -31,79 +29,59 @@
                   <li><img src="/images/user.png" class="profile-icon" alt="Image profil"></a></li>
                   <div class="menu">
                         <a href="/user/{{Users_id}}" >Mon Profil</a>
-                        {{#if Is_Admin}}
-                        <a href="/admin">Admin</a>
-                        {{/if}}
                         <a href="/logout">Se Déconnecter</a>
                   </div>
                 </div>
             </ol>
           </nav>
-
-<!-- ******************** PRINCING ************************-->
-
-    <section class="pricing">
-        {{#each subscriptions}}
-        <div class="table">
-            <div class="price">
-            <h1>{{this.Subscription_Price}}€</h1> 
-            <small>/ month</small>
-            </div>
-            <div class="shadow-price">
-                <div class="table-header">
-                    <div class="title-price">
-                        <img alt="modifier" src="{{this.Subscription_ImagePath}}" width="40" height="40">
-                        <h1>{{this.Subscription_Name}}</h1>
-                    </div>
-                </div>
-            </div>
-
-            <div class="table-body">
-                <ul>
-                <li>
-                    <i class="fa fa-check"></i>
-                    <span>Maximume de livres reservables : {{this.Subscription_Max_Book}}</span>
-                </li> 
-                </ul>
-            </div>
-            <button class="subscribeButton" data-id="{{this.Id_Subscription}}">Sélectionner</button>
+        <div class="container">
+            <div class="Name">
+                <form action="/auth/addadmin" method="POST">
+                  <div class="headingsContainer">
+                    <p>Ajouter un livre</p>
+                  </div>
+                  <div class="mainContainer">
+                  <label for="title">Titre du livre:</label><br>
+                  <input type="text" id="title" name="title" required><br>
+                  <label for="authorName">Nom de l'auteur:</label><br>
+                  <input type="text" id="authorName" name="authorName" required><br>
+                  <label for="authorSurname">Prénom de l'auteur:</label><br>
+                  <input type="text" id="authorSurname" name="authorSurname" required><br>
+                  <label for="genreName">Nom du genre:</label><br>
+                  <input type="text" id="genreName" name="genreName" required><br>
+                  <label for="rating">Note du livre:</label><br>
+                  <input type="text" id="rating" name="rating" required><br>
+                  <label for="imageLink">Lien vers l'image du livre:</label><br>
+                  <input type="text" id="imageLink" name="imageLink" required><br>
+                  <label for="description">Description du livre:</label><br>
+                  <textarea id="description" name="description" required></textarea><br>
+                  <label for="publicationDate">Date de publication:</label><br>
+                  <input type="date" id="publicationDate" name="publicationDate" required><br>
+                  <label for="bookLink">Lien vers le livre:</label><br>
+                  <input type="text" id="bookLink" name="bookLink" required><br>
+                  <input type="submit" value="Ajouter le livre">
+                  </div>
+                </form>
+              <form action="/auth/suppadmin" method="POST">
+                  <div class="headingsContainer">
+                    <p>Supprimer un livre</p>
+                  </div>
+                  <div class="mainContainer">
+                    <label for="deletetitle">Titre du livre à supprimer :</label>
+                    <input type="text" id="deletetitle" name="deletetitle" required>
+                    <input type="submit" value="Supprimer le livre">
+                  </div>
+              </form>
+          </div>
         </div>
-        {{/each}}
-        <script>
-            var subscribeButtons = document.getElementsByClassName('subscribeButton');
-            
-            for (var i = 0; i < subscribeButtons.length; i++) {
-                subscribeButtons[i].addEventListener('click', function() {
-                    var subscriptionId = this.dataset.id;
-                    fetch('/subscribe/'+ subscriptionId, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        credentials: 'include',
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        alert(data.message);
-                    })
-                    .catch((error) => {
-                        console.error('Error:', error);
-                    });
-                });
-            }
-        </script>
-        {{#if message }}
-            <h4 class="message-alert">{{message}}</h4>
-        {{/if}}
-    </section>
-
-<!-- *********************FOOTER************************ -->
-
+            {{#if message }}
+              <h4 class="message-alert">{{message}}</h4>
+            {{/if}}
         <footer>
             <div class="content">
               <div class="top">
                 <div class="logo-details">
-                    <img src="/images/Logo_Solution_Factory_2.png" alt="La l'e-brairie"  width="100" height="100">
+                    <img src="images/Logo_Solution_Factory_2.png" alt="La l'e-brairie"  width="100" height="100">
                     <div class="logo_name">La L'e-brairie</div>
                 </div>
     
@@ -119,7 +97,7 @@
               <div class="link-boxes">
                 <ul class="box">
                   <li class="link_name">Company</li>
-                  <li><a href="/index-connected">Home</a></li>
+                  <li><a href="#">Home</a></li>
                   <li><a href="#">Contact us</a></li>
                   <li><a href="#">About us</a></li>
                   <li><a href="#">Get started</a></li>
@@ -133,8 +111,8 @@
                 </ul>
                 <ul class="box">
                   <li class="link_name">Account</li>
-                  <li><a href="/user/{{Users_id}}">Profile</a></li>
-                  <li><a href="/user/{{Users_id}}">My account</a></li>
+                  <li><a href="#">Profile</a></li>
+                  <li><a href="#">My account</a></li>
                   <li><a href="#">Prefrences</a></li>
                   <li><a href="#">Purchase</a></li>
                 </ul>
@@ -155,6 +133,7 @@
               </div>
             </div>
           </footer>
-    {{/if}}
+    
+        <script src="JS/script.js"></script>
     </body>
 </html>

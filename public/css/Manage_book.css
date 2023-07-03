@@ -1,0 +1,48 @@
+.container {
+    display: flex;
+    justify-content: center;
+    margin-left: 2%;
+    margin-right: 2%;
+    overflow: hidden;
+    
+}
+
+
+.container .Name {
+    width:500px;
+    margin: auto;
+    color:black;
+    font-family: 'Jacques Francois';
+    font-style: italic;
+    font-size: 22px;
+    backdrop-filter: blur(16px) saturate(180%);
+    background-color: rgba(53, 62, 152, 0.29);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.125);
+    padding: 20px 25px;
+}
+
+
+.headingsContainer{
+    text-align: center;
+    color : black
+}
+
+.headingsContainer p{
+    color: black;
+    font-size: 35px;
+}
+
+.mainContainer{
+    padding: 16px;
+}
+
+form{
+  margin-top: 5%;
+}
+
+.message-alert{
+    color: red;
+    text-align: center;
+}
+

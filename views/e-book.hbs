@@ -2,7 +2,7 @@
 <html lang="fr">
     <head>
         <meta charset="UTF-8">
-        <link rel="icon" type="image/png" href="images/Logo_Solution_Factory_2.png"> <!-- Icon en haut de la page-->
+        <link rel="icon" type="image/png" href="/images/Logo_Solution_Factory_2.png"> <!-- Icon en haut de la page-->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> <!-- Librairie Icon-->
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="/css/Footer.css">
@@ -32,6 +32,9 @@
                     <li><img src="/images/user.png" class="profile-icon" alt="Image profil"></a></li>
                     <div class="menu">
                             <a href="/user/{{Users_id}}" >Mon Profil</a>
+                            {{#if Is_Admin}}
+                            <a href="/admin">Admin</a>
+                            {{/if}}
                             <a href="/logout">Se Déconnecter</a>      
                     </div>
                     </div>
@@ -62,13 +65,14 @@
                         {{/each}}
                     </ul>
                 </div>
-                {{#each books}}
                     <div class="eBooks">
+                        {{#each books}}
                         <div class="Book">
                             <a href="/book-connected/{{this.Id_Book}}"><img src="{{this.Book_ImagePath}}" alt="Avatar"></a>
                         </div>
-                    </div>
-                {{/each}}
+                        {{/each}}
+                  </div>
+                </div>
             </div>
             <footer>
                 <div class="content">
@@ -90,7 +94,7 @@
                 <div class="link-boxes">
                     <ul class="box">
                     <li class="link_name">Company</li>
-                    <li><a href="#">Home</a></li>
+                    <li><a href="/">Home</a></li>
                     <li><a href="#">Contact us</a></li>
                     <li><a href="#">About us</a></li>
                     <li><a href="#">Get started</a></li>
@@ -178,13 +182,13 @@
                         {{/each}}
                     </ul>
                 </div>
-                {{#each books}}
                     <div class="eBooks">
+                        {{#each books}}
                         <div class="Book">
                             <a href="/book/{{this.Id_Book}}"><img src="{{this.Book_ImagePath}}" alt="Avatar"></a>
                         </div>
+                         {{/each}}
                     </div>
-                {{/each}}
             </div>
 
             <footer>
@@ -207,7 +211,7 @@
                 <div class="link-boxes">
                     <ul class="box">
                     <li class="link_name">Company</li>
-                    <li><a href="#">Home</a></li>
+                    <li><a href="/">Home</a></li>
                     <li><a href="#">Contact us</a></li>
                     <li><a href="#">About us</a></li>
                     <li><a href="#">Get started</a></li>

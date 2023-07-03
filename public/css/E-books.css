@@ -38,7 +38,7 @@
 }
 
 .eBooks {
-
+    grid-column: 2/span all;
     grid-row: span all;
     padding: 1%;
     display: flex;
