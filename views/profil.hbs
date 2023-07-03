@@ -74,7 +74,7 @@
               <div class="card-scroll-container">
               {{#each books}}
                 <article class="card">
-                    <img class="card__background" src="{{this.Book_ImagePath}}" alt="{{this.Book_Title}}" width="280"/>
+                    <a href="/book-connected/{{this.Id_Book}}"><img class="card__background" src="{{this.Book_ImagePath}}" alt="{{this.Book_Title}}" width="280"/></a>
                 </article>
               {{/each}}
               </div>

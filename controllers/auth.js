@@ -438,19 +438,6 @@ exports.addBook = (req, res) => {
     });
 };
 
-exports.updateBook = (req, res) => {
-    const { bookId, title, author, isbn, publishedDate } = req.body; // Ces champs dépendent des informations nécessaires pour modifier un livre dans votre base de données
-
-    pool.query('UPDATE Book SET Book_Title = ?, Book_Author = ?, Book_Link = ?, WHERE id = ?', [title, author, link, bookId], (error, results) => {
-        if (error) {
-            console.log(error);
-            return res.status(500).send('Erreur lors de la mise à jour du livre.');
-        }
-
-        res.status(200).send('Le livre a été mis à jour avec succès.');
-    });
-};
-
 exports.deleteBook = (req, res) => {
     const bookId = req.params.bookId; // l'ID du livre est généralement envoyé dans l'URL, par exemple /books/123 où 123 est l'ID du livre
 

@@ -5,6 +5,7 @@ CREATE TABLE Book(
    Book_Description VARCHAR(300),
    Book_PublicationDate DATE,
    Book_Link VARCHAR(50),
+   Book_Reservation INt,
    PRIMARY KEY(Id_Book)
 );
 
