@@ -2,10 +2,10 @@ CREATE TABLE Book(
    Id_Book INT AUTO_INCREMENT,
    Book_Title VARCHAR(50),
    Book_Rating INT,
-   Book_ImagePath VARCHAR(2000),
-   Book_Description VARCHAR(2000),
+   Book_ImagePath VARCHAR(200),
+   Book_Description VARCHAR(5000),
    Book_PublicationDate DATE,
-   Book_Link VARCHAR(2000),
+   Book_Link VARCHAR(200),
    Book_Reservation INT,
    PRIMARY KEY(Id_Book)
 );
@@ -15,7 +15,7 @@ CREATE TABLE Subscription(
    Subscription_Name VARCHAR(50),
    Subscription_Price FLOAT,
    Subscription_Max_Book INT,
-   Subscription_ImagePath VARCHAR(2000),
+   Subscription_ImagePath VARCHAR(100),
    PRIMARY KEY(Id_Subscription)
 );
 
