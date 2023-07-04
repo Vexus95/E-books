@@ -507,7 +507,7 @@ exports.deleteBook = (req, res) => {
 
 
 exports.addBook = (req, res) => {
-    const { title, rating, imagelink, description, publicationDate, bookLink, authorName, authorSurname, genreName } = req.body;
+    const { title, rating, imageLink, description, publicationDate, bookLink, authorName, authorSurname, genreName } = req.body;
 
     pool.getConnection((err, connection) => {
         if (err) {
@@ -546,7 +546,7 @@ exports.addBook = (req, res) => {
                         {
                             Book_Title: title,
                             Book_Rating: rating,
-                            Book_ImagePath: imagelink,
+                            Book_ImagePath: imageLink,
                             Book_Description: description,
                             Book_PublicationDate: publicationDate,
                             Book_Link: bookLink

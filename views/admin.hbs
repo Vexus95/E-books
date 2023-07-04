@@ -72,11 +72,12 @@
                     <input type="submit" value="Supprimer le livre">
                   </div>
               </form>
+              {{#if message}}
+                  <h4 class="message-alert">{{message}}</h4>
+              {{/if}}
           </div>
         </div>
-            {{#if message }}
-              <h4 class="message-alert">{{message}}</h4>
-            {{/if}}
+            
         <footer>
             <div class="content">
               <div class="top">
@@ -133,7 +134,5 @@
               </div>
             </div>
           </footer>
-    
-        <script src="JS/script.js"></script>
     </body>
 </html>
