@@ -13,7 +13,7 @@ CREATE TABLE Book(
 CREATE TABLE Subscription(
    Id_Subscription INT AUTO_INCREMENT,
    Subscription_Name VARCHAR(50),
-   Subscription_Price INT,
+   Subscription_Price FLOAT,
    Subscription_Max_Book INT,
    Subscription_ImagePath VARCHAR(2000),
    PRIMARY KEY(Id_Subscription)
@@ -38,7 +38,7 @@ CREATE TABLE Users(
    Users_Firstname VARCHAR(50),
    Users_Mail VARCHAR(50),
    Users_Phonenumber VARCHAR(50),
-   Users_Password VARCHAR(50),
+   Users_Password VARCHAR(100),
    Is_Admin INT,
    Id_Subscription INT,
    PRIMARY KEY(Users_id),
