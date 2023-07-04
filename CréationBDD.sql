@@ -1,3 +1,6 @@
+CREATE DATABASE project;
+USE project;
+
 CREATE TABLE Book(
    Id_Book INT AUTO_INCREMENT,
    Book_Title VARCHAR(50),
