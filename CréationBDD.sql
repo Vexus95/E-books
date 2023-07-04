@@ -1,5 +1,5 @@
 CREATE TABLE Book(
-   Id_Book INT,
+   Id_Book INT AUTO_INCREMENT,
    Book_Title VARCHAR(50),
    Book_Rating INT,
    Book_ImagePath VARCHAR(2000),
@@ -11,7 +11,7 @@ CREATE TABLE Book(
 );
 
 CREATE TABLE Subscription(
-   Id_Subscription INT,
+   Id_Subscription INT AUTO_INCREMENT,
    Subscription_Name VARCHAR(50),
    Subscription_Price INT,
    Subscription_Max_Book INT,
@@ -20,20 +20,20 @@ CREATE TABLE Subscription(
 );
 
 CREATE TABLE Authors(
-   Id_Author INT,
+   Id_Author INT AUTO_INCREMENT,
    Author_Name VARCHAR(50),
    Author_Surname VARCHAR(50),
    PRIMARY KEY(Id_Author)
 );
 
 CREATE TABLE Genre(
-   Id_Genre INT,
+   Id_Genre INT AUTO_INCREMENT,
    Genre_Name VARCHAR(50),
    PRIMARY KEY(Id_Genre)
 );
 
 CREATE TABLE Users(
-   Users_id INT,
+   Users_id INT AUTO_INCREMENT,
    Users_Lastname VARCHAR(50),
    Users_Firstname VARCHAR(50),
    Users_Mail VARCHAR(50),
@@ -53,7 +53,7 @@ CREATE TABLE Borrow(
    FOREIGN KEY(Id_Book) REFERENCES Book(Id_Book)
 );
 
-CREATE TABLE Write(
+CREATE TABLE Writed(
    Id_Book INT,
    Id_Author INT,
    PRIMARY KEY(Id_Book, Id_Author),
@@ -117,10 +117,10 @@ INSERT INTO book(Book_Title,Book_Rating,Book_ImagePath,Book_Description,Book_Pub
  
  Avec son atmosphère sombre, ses retournements de situation saisissants et ses stratégies élaborées, Death Note captive les lecteurs et les spectateurs à chaque page et chaque épisode. Plongez dans ce récit captivant et découvrez où les choix moraux mèneront Light et L dans leur affrontement intellectuel haletant.","2003-12-01","/pdf/Naruto T.1.pdf",2);
 
-INSERT INTO subscription(Subscription_Name, Subscription_Price, Subscription_Max_Book, Subscription_ImagePath) VALUES("rien",0,0,"");
-INSERT INTO subscription(Subscription_Name, Subscription_Price, Subscription_Max_Book, Subscription_ImagePath) VALUES("Yamcha",3.99,3,"/images/abonnement1.png");
-INSERT INTO subscription(Subscription_Name, Subscription_Price, Subscription_Max_Book, Subscription_ImagePath) VALUES("Piccolo",6.99,5,"/images/abonnement2.png");
-INSERT INTO subscription(Subscription_Name, Subscription_Price, Subscription_Max_Book, Subscription_ImagePath) VALUES("Goku",9.99,100,"/images/abonnement3.png");
+INSERT INTO subscription(Id_Subscription,Subscription_Name, Subscription_Price, Subscription_Max_Book, Subscription_ImagePath) VALUES(1,"rien",0,0,"/images/abonnement1.pn");
+INSERT INTO subscription(Id_Subscription,Subscription_Name, Subscription_Price, Subscription_Max_Book, Subscription_ImagePath) VALUES(2,"Yamcha",3.99,3,"/images/abonnement1.png");
+INSERT INTO subscription(Id_Subscription,Subscription_Name, Subscription_Price, Subscription_Max_Book, Subscription_ImagePath) VALUES(3,"Piccolo",6.99,5,"/images/abonnement2.png");
+INSERT INTO subscription(Id_Subscription,Subscription_Name, Subscription_Price, Subscription_Max_Book, Subscription_ImagePath) VALUES(4,"Goku",9.99,100,"/images/abonnement3.png");
 
 INSERT INTO authors(Author_Name, Author_Surname) VALUES ("Akira","Toriyama");
 INSERT INTO authors(Author_Name, Author_Surname) VALUES ("Oda","Eiichirō");
